@@ -36,7 +36,7 @@ FROM nginx:alpine AS runtime
 COPY --from=build /app/dist/portfolio-sidy/browser/ /usr/share/nginx/html
 
 # Indique à Coolify quel port le conteneur utilise
-EXPOSE 3000
+EXPOSE 80
 
 # Commande de démarrage de Nginx
 CMD ["nginx", "-g", "daemon off;"]
