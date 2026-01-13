@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'app/scss/variables' as v;
+html{
+      background-color: #1E1E1E;
+
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: v.$body-gradient;
+  background-attachment: fixed; // Important pour que le dégradé reste stable au scroll
+  color: v.$text-white;
+  min-height: 100vh;
+  
+  // Padding adaptatif
+  padding: 64px; // Desktop (par défaut)
+
+  @media (max-width: v.$tablet) {
+    padding: 32px; // Tablette
+  }
+
+  @media (max-width: v.$mobile) {
+    padding: 20px 16px; // Mobile (on réduit surtout les côtés)
+  }
+}
+
+// Optionnel : Ajustement pour la Navbar Fixe
+// Si votre navbar est fixée en haut (80px), le body a besoin d'un margin-top
+// pour ne pas que le contenu passe dessous.
+main {
+  margin-top: 80px; 
+}

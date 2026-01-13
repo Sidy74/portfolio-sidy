@@ -1,0 +1,32 @@
+// --- Couleurs Officielles Figma ---
+$color-yellow: #FEF200; // 0%
+$color-orange-mid: #F7A821; // 15%
+$color-orange-deep: #F16A3D; // 100%
+
+// Dégradé réutilisable partout
+$main-gradient: linear-gradient(90deg, 
+    $color-yellow 0%, 
+    $color-orange-mid 15%, 
+    $color-orange-deep 100%
+);
+
+// Variables de structure
+$bg-dark: #0a0a0a;
+$text-white: #ffffff;
+$text-gray: #b3b3b3;
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$mobile: 600px;
+$tablet: 1024px;
+$indicator-width: 24px;
+
+
+
+// --- Body Background Gradient ---
+$body-bg-start: #000000;       // 0% (Noir pur)
+$body-bg-end: rgba(71, 16, 6, 0.2); // 62% (#471006 à 20% d'opacité)
+
+// Le gradient global du site
+$body-gradient: linear-gradient(180deg, 
+    $body-bg-start 0%, 
+    $body-bg-end 62%
+);
