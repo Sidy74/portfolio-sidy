@@ -1,14 +1,40 @@
-// --- Couleurs Officielles Figma ---
-$color-yellow: #FEF200; // 0%
-$color-orange-mid: #F7A821; // 15%
-$color-orange-deep: #F16A3D; // 100%
+// --- Couleurs de Fond (Backgrounds) ---
+$bg-dark: #050505;        // Noir pur pour un contraste maximal
+$surface-card: #120D1D;   // Noir teinté de violet pour les blocs/sections
 
-// Dégradé réutilisable partout
-$main-gradient: linear-gradient(90deg, 
+// --- Palette de Textes ---
+$text-primary: #F9FAFB;   // Blanc cassé (gris très léger) pour le confort visuel
+$text-secondary: #94A3B8; // Gris ardoise pour les descriptions et détails
+
+// --- Accents & Interactif ---
+$accent-vivid: #8B5CF6;   // Violet vif (Vivid Purple) - Boutons et titres
+$accent-soft: #D8B4FE;    // Violet clair (Lavande) - Icônes et états :hover
+
+// --- Couleurs du Dégradé (Branding) ---
+$color-yellow: #FEF200;
+$color-orange-mid: #F79B39;
+$color-orange-deep: #EB5235;
+
+// --- Gradients Réutilisables ---
+// Dégradé linéaire horizontal (pour les logos ou soulignements)
+$brand-gradient: linear-gradient(90deg, 
     $color-yellow 0%, 
     $color-orange-mid 15%, 
     $color-orange-deep 100%
 );
+
+$color-light-glow: #F79B39;
+
+// Dégradé de fond (Background)
+$body-gradient: linear-gradient(180deg, 
+    rgba($color-light-glow, 0.25) 0%, 
+    $bg-dark 100%
+);
+
+// --- Utilitaires ---
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$border-radius-pill: 50px;
+
 
 // Variables de structure
 $bg-dark: #0a0a0a;
@@ -21,12 +47,13 @@ $indicator-width: 24px;
 
 
 
-// --- Body Background Gradient ---
-$body-bg-start: #000000;       // 0% (Noir pur)
-$body-bg-end: rgba(71, 16, 6, 0.2); // 62% (#471006 à 20% d'opacité)
-
-// Le gradient global du site
+// --- Gradients ---
+// Dégradé de fond : Orange doré en haut s'estompant vers le noir
 $body-gradient: linear-gradient(180deg, 
-    $body-bg-start 0%, 
-    $body-bg-end 62%
+    rgba($color-light-glow, 0.22) 0%, 
+    $bg-dark 65%,
+    $bg-dark 100%
 );
+
+// Dégradé pour le texte et les boutons (Horizontal)
+$main-gradient: linear-gradient(90deg, #FEF200 0%, #F79B39 15%, #EB5235 100%);

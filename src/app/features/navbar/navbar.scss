@@ -1,0 +1,102 @@
+@use '../../scss/variables' as v;
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem 8%; // Ajout d'un padding pour respirer
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    position: fixed; // Important pour rester en haut
+    top: 0;
+
+    .logo {
+        font-size: 1.4rem;
+        font-weight: 800;
+        white-space: nowrap; // Évite que le nom passe sur deux lignes
+
+        .gradient-text {
+            background: v.$main-gradient;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 3rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        // --- Responsive Tablettes (sous 1024px) ---
+        @media (max-width: 1024px) {
+            gap: 1.5rem;
+            a { font-size: 18px; }
+        }
+
+        // --- Responsive Mobile (sous 768px) ---
+        @media (max-width: 768px) {
+            display: none; // Cache les liens sur mobile pour un menu burger
+            // Ou on peut les transformer en menu vertical si tu préfères
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 24px;
+            color: v.$text-gray;
+            font-weight: 500;
+            position: relative;
+            transition: v.$transition-smooth;
+            padding: 0.5rem 0;
+
+            &:hover { color: v.$text-white; }
+
+            &.active {
+                color: v.$text-white;
+                .indicator {
+                    opacity: 1;
+                    transform: translateX(-50%) scaleX(1);
+                }
+            }
+
+            .indicator {
+                position: absolute;
+                bottom: -4px;
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+                width: 24px;
+                height: 2px;
+                background: v.$main-gradient;
+                border-radius: 2px;
+                transition: v.$transition-smooth;
+                opacity: 0;
+            }
+        }
+    }
+
+    .external-links {
+        display: flex;
+        gap: 1.5rem;
+
+        @media (max-width: 480px) {
+            gap: 0.8rem;
+            .social-link { font-size: 0.75rem; }
+        }
+
+        .social-link {
+            text-decoration: none;
+            color: v.$text-white;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: v.$transition-smooth;
+
+            &:hover {
+                opacity: 1;
+                color: v.$color-orange-mid;
+            }
+        }
+    }
+}

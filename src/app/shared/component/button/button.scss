@@ -1,0 +1,62 @@
+@use '../../../scss/variables' as v;
+
+.btn {
+  // 1. Base : Utiliser inline-flex pour l'alignement vertical parfait
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  // 2. Taille fixe pour garantir l'uniformité
+  height: 48px; // Force la même hauteur pour tous
+  padding: 0 28px; 
+  box-sizing: border-box; // Inclus la bordure dans le calcul des 48px
+  
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: v.$transition-smooth;
+  border: none;
+  white-space: nowrap; // Empêche le texte de passer à la ligne
+
+  // --- TYPE: PRIMARY DOUBLE (CV) ---
+  &.primary-double {
+    background: v.$main-gradient;
+    color: #000;
+    // On simule la double bordure sans changer la taille réelle
+    border: 1.5px solid v.$color-orange-deep;
+    box-shadow: inset 0 0 0 2px #000;
+  }
+
+  // --- TYPE: OUTLINE (Message) ---
+  &.outline {
+    background: transparent;
+    color: v.$text-white;
+    // Utiliser une bordure de la même épaisseur que le primary-double
+    border: 1.5px solid v.$color-orange-mid;
+  }
+
+  // 3. Alignement de l'icône Lucide
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; // S'assure que l'icône est centrée dans la hauteur du bouton
+    
+    lucide-icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+// &:disabled,
+// &.is-disabled {
+//     opacity: 0.5;
+//     cursor: not-allowed;
+//     transform: none !important;
+//     pointer-events: none;
+
+//     // Optionnel : on peut griser légèrement le dégradé
+//     filter: grayscale(0.5);
+// }

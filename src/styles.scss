@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'app/scss/variables' as v;
-html{
-      background-color: #1E1E1E;
 
+html {
+  background-color: #080705;
 }
 
 
@@ -13,7 +13,8 @@ body {
   background-attachment: fixed; // Important pour que le dégradé reste stable au scroll
   color: v.$text-white;
   min-height: 100vh;
-  
+  height: 100vh;
+
   // Padding adaptatif
   padding: 64px; // Desktop (par défaut)
 
@@ -30,5 +31,5 @@ body {
 // Si votre navbar est fixée en haut (80px), le body a besoin d'un margin-top
 // pour ne pas que le contenu passe dessous.
 main {
-  margin-top: 80px; 
+  margin-top: 80px;
 }

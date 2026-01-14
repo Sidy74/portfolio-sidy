@@ -1,0 +1,112 @@
+@use '../../scss/variables' as v;
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 8% 60px;
+    min-height: 85vh;
+    gap: 40px;
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 100px;
+    }
+}
+
+.hero-text {
+    .greeting {
+        font-size: 1.5rem;
+        color: v.$text-white;
+
+        .highlight {
+            color: v.$color-orange-mid;
+            font-weight: 700;
+        }
+    }
+
+    .main-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        line-height: 1.1;
+        margin: 20px 0;
+        background: v.$main-gradient;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .summary {
+        color: v.$text-gray;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 550px;
+        margin-bottom: 40px;
+
+        @media (max-width: 992px) {
+            margin: 0 auto 40px;
+        }
+    }
+}
+
+.cta-group {
+    display: flex;
+    gap: 20px;
+
+    @media (max-width: 992px) {
+        justify-content: center;
+    }
+}
+
+.hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .main-svg {
+        width: 100%;
+        max-width: 550px; // Ajuste selon la taille de ton export Figma
+        height: auto;
+        z-index: 2;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        animation: float 6s ease-in-out infinite;
+    }
+
+    // Flèches de navigation positionnées par-dessus le SVG
+    .nav-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 3rem;
+        color: v.$color-orange-mid;
+        cursor: pointer;
+        z-index: 10;
+        transition: v.$transition-smooth;
+
+        &:hover {
+            scale: 1.2;
+            color: v.$text-white;
+        }
+
+        &.prev {
+            left: -10px;
+        }
+
+        &.next {
+            right: -10px;
+        }
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}

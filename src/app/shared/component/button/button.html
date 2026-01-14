@@ -1,0 +1,12 @@
+<button
+  [class]="'btn ' + type()"
+  (click)="onClick()"
+  [disabled]="disabled()"
+  [class.is-disabled]="disabled()"
+>
+  <span class="btn-text">{{ label() }}</span>
+
+  @if (iconName()) {
+  <lucide-icon [name]="iconName()!" [size]="18" class="btn-icon"> </lucide-icon>
+  }
+</button>
