@@ -1,0 +1,4 @@
+@use './scss/variables' as v;
+// Optionnel : Ajustement pour la Navbar Fixe
+// Si votre navbar est fixée en haut (80px), le body a besoin d'un margin-top
+// pour ne pas que le contenu passe dessous.

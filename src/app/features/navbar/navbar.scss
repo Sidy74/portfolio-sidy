@@ -1,102 +1,217 @@
 @use '../../scss/variables' as v;
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 1.5rem 8%; // Ajout d'un padding pour respirer
+    width: 100vw;
     z-index: 1000;
-    backdrop-filter: blur(10px);
-    position: fixed; // Important pour rester en haut
-    top: 0;
+    box-sizing: border-box;
 
-    .logo {
-        font-size: 1.4rem;
+    // --- LOGIQUE COMMUNE ---
+    .logo .gradient-text {
+        background: v.$main-gradient;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-weight: 800;
-        white-space: nowrap; // Évite que le nom passe sur deux lignes
-
-        .gradient-text {
-            background: v.$main-gradient;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
     }
 
-    .nav-links {
-        display: flex;
-        gap: 3rem;
-        list-style: none;
-        margin: 0;
-        padding: 0;
+    // --- VERSION MOBILE (< 768px) ---
+    @media (max-width: 768px) {
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            padding: 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // background: rgba(10, 8, 7, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-sizing: border-box;
 
-        // --- Responsive Tablettes (sous 1024px) ---
-        @media (max-width: 1024px) {
-            gap: 1.5rem;
-            a { font-size: 18px; }
+            .external-links {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .social-link {
+                font-size: 13px;
+                text-decoration: none;
+                color: v.$text-gray;
+            }
         }
 
-        // --- Responsive Mobile (sous 768px) ---
-        @media (max-width: 768px) {
-            display: none; // Cache les liens sur mobile pour un menu burger
-            // Ou on peut les transformer en menu vertical si tu préfères
-        }
+        .nav-links {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.005);
+            display: flex;
+            backdrop-filter: blur(8px);
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: env(safe-area-inset-bottom);
+            box-sizing: border-box;
+            border-radius: 16px 16px 0 0;
+            list-style: none; // Pour enlever les points dont on a parlé
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
 
-        a {
-            text-decoration: none;
-            font-size: 24px;
-            color: v.$text-gray;
-            font-weight: 500;
-            position: relative;
-            transition: v.$transition-smooth;
-            padding: 0.5rem 0;
+            // --- Bordure dégradée sur le dessus ---
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1.5px; // Épaisseur de ta bordure
+                background: v.$main-gradient; // Utilisation de ton dégradé
+                border-radius: 16px 16px 0 0; // Suit l'arrondi du parent
+            }
 
-            &:hover { color: v.$text-white; }
+            li {
+                list-style: none;
+            }
 
-            &.active {
-                color: v.$text-white;
-                .indicator {
-                    opacity: 1;
-                    transform: translateX(-50%) scaleX(1);
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                gap: 4px;
+                color: v.$text-gray;
+                font-size: 14px;
+                text-decoration: none;
+
+                &.active {
+                    color: v.$color-orange-mid;
+                }
+
+                .mobile-icon {
+                    width: 22px;
+                    height: 22px;
                 }
             }
 
-            .indicator {
-                position: absolute;
-                bottom: -4px;
-                left: 50%;
-                transform: translateX(-50%) scaleX(0);
-                width: 24px;
-                height: 2px;
-                background: v.$main-gradient;
-                border-radius: 2px;
-                transition: v.$transition-smooth;
-                opacity: 0;
+            .link-text {
+                display: block;
+            }
+
+            // Affiche le texte sous l'icône
+            .desktop-only {
+                display: none;
             }
         }
     }
 
-    .external-links {
-        display: flex;
-        gap: 1.5rem;
+    // --- VERSION DESKTOP (> 769px) ---
+    @media (min-width: 769px) {
 
-        @media (max-width: 480px) {
-            gap: 0.8rem;
-            .social-link { font-size: 0.75rem; }
+        position: fixed;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 8%;
+        background: rgba(255, 255, 255, 0);
+        backdrop-filter: blur(10px);
+
+        .top-bar {
+            display: flex;
+            gap: 2rem;
+            width: auto;
+            align-items: center;
         }
 
-        .social-link {
-            text-decoration: none;
-            color: v.$text-white;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            transition: v.$transition-smooth;
 
-            &:hover {
-                opacity: 1;
-                color: v.$color-orange-mid;
+
+        .social-link {
+            font-size: 13px;
+            text-decoration: none;
+            color: v.$text-gray;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+
+            a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                font-size: 18px;
+                color: v.$text-gray;
+                font-weight: 500;
+                position: relative;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: v.$text-white;
+
+                    .indicator {
+                        opacity: 0.8; // On montre légèrement l'indicateur au survol
+                        transform: scaleX(0.8); // Un peu plus petit que l'actif
+                    }
+                }
+
+                &.active {
+                    background: v.$main-gradient;
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-weight: 600;
+
+                    .indicator {
+                        opacity: 1;
+                        transform: scaleX(1); // Taille pleine
+                        background: v.$main-gradient; // Ton dégradé orange/jaune
+                    }
+                }
+
+                .mobile-icon {
+                    display: none;
+                }
+
+                .indicator {
+                    width: 20px;
+                    height: 3px;
+                    background: v.$text-gray;
+                    border-radius: 10px;
+                    margin-top: 4px; // Espace entre le texte et la barre
+                    opacity: 0; // Caché par défaut
+                    transform: scaleX(0); // Réduit à 0 pour l'animation
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); // Effet de rebond
+                }
             }
+        }
+
+        // On remet les liens sociaux à droite de la nav sur PC
+        .top-bar {
+            display: contents;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            order: 1;
+        }
+
+        .nav-links {
+            order: 2;
+        }
+
+        .external-links {
+            order: 3;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
     }
 }

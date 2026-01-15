@@ -1,23 +1,32 @@
 <nav class="navbar">
-  <div class="logo">
-    <span class="gradient-text">Sidy Diarra</span>
+  <div class="top-bar">
+    <div class="logo">
+      <span class="gradient-text">Sidy Diarra</span>
+    </div>
+
+    <div class="external-links">
+      <a href="https://github.com/Sidy74" target="_blank" class="social-link">
+        <lucide-icon [name]="github" class="icon"></lucide-icon>
+      </a>
+      <a href="https://ml.linkedin.com/in/sidy-diarra-genie-logiciel-stage-bamako" target="_blank" class="social-link">
+        <lucide-icon [name]="linkedin" class="icon"></lucide-icon>
+      </a>
+    </div>
   </div>
 
   <ul class="nav-links">
     @for (item of menuItems(); track item.path) {
-      <li>
-        <a [routerLink]="item.path" 
-           routerLinkActive="active" 
-           [routerLinkActiveOptions]="{exact: true}">
-          {{ item.label }}
-          <div class="indicator"></div>
-        </a>
-      </li>
+    <li>
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <lucide-icon [img]="item.icon" class="mobile-icon"></lucide-icon>
+        <span class="link-text">{{ item.label }}</span>
+        <div class="indicator desktop-only"></div>
+      </a>
+    </li>
     }
   </ul>
-
-  <div class="external-links">
-    <a href="https://github.com/votre-profil" target="_blank" class="social-link">Github</a>
-    <a href="https://linkedin.com/in/votre-profil" target="_blank" class="social-link">LinkedIn</a>
-  </div>
 </nav>

@@ -7,17 +7,29 @@
     padding: 120px 8% 60px;
     min-height: 85vh;
     gap: 40px;
+    overflow-x: hidden; // Évite les débordements dus aux animations
 
-    @media (max-width: 992px) {
+    // --- Tablette & Petit Desktop ---
+    @media (max-width: 1024px) {
+        padding: 100px 5% 60px;
+        gap: 20px;
+    }
+
+    // --- Mobile (Basculement en colonne) ---
+    @media (max-width: v.$mobile) {
         grid-template-columns: 1fr;
         text-align: center;
-        padding-top: 100px;
+        padding: 12px;
+
+        padding-top: 100px; // Laisse la place pour ton nom en haut
+        padding-bottom: 100px; // Laisse la place pour la Tab Bar en bas
+        min-height: auto;
     }
 }
 
 .hero-text {
     .greeting {
-        font-size: 1.5rem;
+        font-size: clamp(1.1rem, 3vw, 1.5rem); // Taille fluide
         color: v.$text-white;
 
         .highlight {
@@ -27,34 +39,51 @@
     }
 
     .main-title {
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        // Utilisation de clamp pour éviter que le titre soit trop gros sur petit mobile
+        font-size: clamp(2rem, 8vw, 4.5rem);
         line-height: 1.1;
         margin: 20px 0;
         background: v.$main-gradient;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
+        font-weight: 900;
     }
 
     .summary {
         color: v.$text-gray;
-        font-size: 1.1rem;
+        font-size: clamp(0.95rem, 2vw, 1.1rem);
         line-height: 1.6;
         max-width: 550px;
         margin-bottom: 40px;
+        text-align: left;
+      
 
         @media (max-width: 992px) {
-            margin: 0 auto 40px;
+            margin: 0 auto 30px;
+            padding: 0 10px;
         }
     }
 }
 
 .cta-group {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 
     @media (max-width: 992px) {
         justify-content: center;
+        flex-direction: column; // Boutons l'un sur l'autre sur petit mobile
+        align-items: center;
+
+        ::ng-deep app-btn-primary,
+        ::ng-deep app-btn-outline {
+            width: 100%; // Les boutons prennent toute la largeur dispo
+            max-width: 300px;
+        }
+    }
+
+    @media (min-width: 480px) and (max-width: 992px) {
+        flex-direction: row; // On garde les boutons côte à côte sur tablettes
     }
 }
 
@@ -63,38 +92,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
+
+    @media (max-width: 992px) {
+        order: -1; // Met l'image au-dessus du texte sur mobile (Optionnel)
+        margin-bottom: 40px;
+    }
 
     .main-svg {
         width: 100%;
-        max-width: 550px; // Ajuste selon la taille de ton export Figma
+        max-width: clamp(280px, 50vw, 550px);
         height: auto;
         z-index: 2;
         filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
         animation: float 6s ease-in-out infinite;
     }
 
-    // Flèches de navigation positionnées par-dessus le SVG
     .nav-arrow {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 3rem;
+        font-size: clamp(2rem, 5vw, 3rem); // Flèches plus petites sur mobile
         color: v.$color-orange-mid;
         cursor: pointer;
         z-index: 10;
         transition: v.$transition-smooth;
 
+        @media (max-width: 480px) {
+            background: rgba(0, 0, 0, 0.3); // Fond léger pour la lisibilité
+            border-radius: 50%;
+            padding: 5px;
+        }
+
         &:hover {
-            scale: 1.2;
+            transform: translateY(-50%) scale(1.1);
             color: v.$text-white;
         }
 
         &.prev {
-            left: -10px;
+            left: -5px;
         }
 
         &.next {
-            right: -10px;
+            right: -5px;
         }
     }
 }
