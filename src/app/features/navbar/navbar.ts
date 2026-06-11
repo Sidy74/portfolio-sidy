@@ -1,19 +1,30 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Briefcase, Github, Home, Linkedin, LucideAngularModule, Mail } from "lucide-angular";
+// Import du composant de rendu et des icônes génériques encore existantes
+import {
+  LucideIcon,
+  provideLucideIcons,
+  LucideHome,
+  LucideBriefcase,
+  LucideMail,
+  LucideDynamicIcon,
+} from '@lucide/angular';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, LucideAngularModule],
+  standalone: true,
+  // Ajout de LucideIcon pour pouvoir lire la balise <lucide-icon> dans le HTML
+  imports: [RouterLink, RouterLinkActive, LucideDynamicIcon],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
+  // Injection locale des icônes utilisées dans le menu
+  providers: [provideLucideIcons(LucideHome, LucideBriefcase, LucideMail)],
 })
 export class Navbar {
-  readonly github = Github;
-  readonly linkedin = Linkedin;
+  // Déclaration du tableau de navigation sous forme de Signal
   menuItems = signal([
-    { label: 'Accueil', path: '/',icon: Home  },
-    { label: 'Projets', path: '/projets', icon: Briefcase },
-    { label: 'Contact', path: '/contact', icon: Mail },
+    { label: 'Accueil', path: '/', icon: 'home' },
+    { label: 'Projets', path: '/projets', icon: 'briefcase' },
+    { label: 'Contact', path: '/contact', icon: 'mail' },
   ]);
 }

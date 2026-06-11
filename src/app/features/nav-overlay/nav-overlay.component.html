@@ -1,0 +1,24 @@
+<div class="nav-overlay" [class.active]="isOpen()">
+  <div class="overlay-backdrop" (click)="closeMenu.emit()"></div>
+
+  <nav class="overlay-menu">
+    <ul class="nav-list">
+      @for (item of navItems; track item.path; let i = $index) {
+        <li 
+          class="nav-item" 
+          [style.animation-delay]="(i * 0.1) + 's'"
+        >
+          <a 
+            [routerLink]="item.path" 
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onItemClick()"
+          >
+            <span class="index">0{{ i + 1 }}.</span>
+            <span class="label">{{ item.label }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+</div>

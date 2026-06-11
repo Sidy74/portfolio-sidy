@@ -7,6 +7,8 @@
   <span class="btn-text">{{ label() }}</span>
 
   @if (iconName()) {
-  <lucide-icon [name]="iconName()!" [size]="18" class="btn-icon"> </lucide-icon>
+    @if (iconName()) {
+      <svg [lucideIcon]="iconName() ?? null" class="btn-icon" size="18"></svg>
+    }
   }
 </button>

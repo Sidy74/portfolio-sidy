@@ -1,0 +1,142 @@
+<section class="hero-container">
+  <div class="menu-burger-mobile" [class.open]="isMenuOpen()" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="container">
+    <div class="glass-card">
+      <div class="layer-glows"></div>
+      <div class="layer-grid"></div>
+
+      <div class="visual-wrapper">
+        <img src="photo-sidy1.jpg" alt="Sidy Diarra Visual" class="main-svg" />
+      </div>
+
+      <aside class="sidebar-left">
+
+        <div class="menu-burger" [class.open]="isMenuOpen()" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+        <div class="slider-dots">
+          <span class="dot"></span>
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="vertical-text">PORTFOLIO</div>
+      </aside>
+
+      <div class="hero-text">
+        <p class="greeting">Bonjour, Je suis <span class="highlight">Sidy</span></p>
+        <h1 class="main-title">
+          INGÉNIEUR LOGICIEL<br />
+          FULL STACK &<br />
+          DESIGNER UI/UX
+        </h1>
+        <p class="summary">
+          Je conçois et développe des solutions numériques robustes, de l'architecture backend à
+          l'interface utilisateur pixel-perfect.
+        </p>
+
+        <div class="cta-group">
+          <a
+            href="Sidy_Diarra_CV_Professionnel_Minimaliste_Ingénieur_Noir_et_Blanc.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <app-button
+              label="Télécharger mon CV"
+              type="primary-double"
+              [iconName]="downloadIcon"
+            ></app-button>
+          </a>
+          <a href="mailto:diarrasidy1290@gmail.com">
+            <app-button label="Envoie-moi un message" type="outline"></app-button>
+          </a>
+        </div>
+
+        <div class="hero-footer-nav">
+          <div class="logo">SIDY DIARRA</div>
+
+          <div class="social-icons">
+            <span class="icon-social"><svg lucide-icon="house"></svg></span>
+
+            <!-- SVG LINKEDIN -->
+            <a
+              href="https://www.linkedin.com/in/sidy-diarra"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="icon-social"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                ></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <!-- SVG GITHUB -->
+            <a href="https://github.com/sidy74" target="_blank" rel="noopener noreferrer">
+              <svg
+                viewBox="0 0 24 24"
+                class="icon-social"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                ></path>
+              </svg>
+            </a>
+          </div>
+
+          <div class="search-icon">
+            <svg lucide-icon="search"></svg>
+          </div>
+        </div>
+      </div>
+
+      <app-hero-visual />
+    </div>
+  </div>
+</section>
+
+<svg width="0" height="0" style="position: absolute; pointer-events: none">
+  <defs>
+    <clipPath id="bento-wave-mask" clipPathUnits="objectBoundingBox">
+      <path
+        d="M 0.02,0 
+               H 0.12 
+               C 0.15,0 0.16,0.05 0.18,0.05 
+               H 0.32 
+               C 0.34,0.05 0.35,0 0.38,0 
+               H 0.98 
+               A 0.02,0.04 0 0 1 1,0.04 
+               V 0.96 
+               A 0.02,0.04 0 0 1 0.98,1 
+               H 0.02 
+               A 0.02,0.04 0 0 1 0,0.96 
+               V 0.04 
+               A 0.02,0.04 0 0 1 0.02,0 Z"
+      />
+    </clipPath>
+  </defs>
+</svg>
+
+<app-nav-overlay 
+  [isOpen]="isMenuOpen()" 
+  (closeMenu)="toggleMenu()"
+></app-nav-overlay>

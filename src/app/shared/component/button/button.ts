@@ -1,18 +1,25 @@
 import { Component, input, output } from '@angular/core';
-import { Home, LucideAngularModule, LucideIconData } from 'lucide-angular';
+import {
+  LucideHouse,
+  provideLucideIcons,
+  LucideDynamicIcon,
+  LucideIconData,
+  LucideIconInput,
+} from '@lucide/angular';
 
 @Component({
   selector: 'app-button',
-  imports: [LucideAngularModule],
+  imports: [LucideDynamicIcon],
   templateUrl: './button.html',
   styleUrl: './button.scss',
+  providers: [provideLucideIcons(LucideHouse)],
 })
 export class Button {
   label = input.required<string>();
   // Ajout du type 'primary-double' pour ton bouton CV
   type = input<'primary' | 'primary-double' | 'outline'>('primary');
 
-  iconName = input<LucideIconData | undefined>(undefined);
+  iconName = input<LucideIconInput | null>(null);
   disabled = input<boolean>(false);
 
   btnClick = output<void>();

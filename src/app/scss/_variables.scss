@@ -1,59 +1,49 @@
-// --- Couleurs de Fond (Backgrounds) ---
-$bg-dark: #050505;        // Noir pur pour un contraste maximal
-$surface-card: #120D1D;   // Noir teinté de violet pour les blocs/sections
+// Backgrounds
+$bg-dark: #050505;
+$surface-card: #120d1d;
 
-// --- Palette de Textes ---
-$text-primary: #F9FAFB;   // Blanc cassé (gris très léger) pour le confort visuel
-$text-secondary: #94A3B8; // Gris ardoise pour les descriptions et détails
-
-// --- Accents & Interactif ---
-$accent-vivid: #8B5CF6;   // Violet vif (Vivid Purple) - Boutons et titres
-$accent-soft: #D8B4FE;    // Violet clair (Lavande) - Icônes et états :hover
-
-// --- Couleurs du Dégradé (Branding) ---
-$color-yellow: #FEF200;
-$color-orange-mid: #F79B39;
-$color-orange-deep: #EB5235;
-
-// --- Gradients Réutilisables ---
-// Dégradé linéaire horizontal (pour les logos ou soulignements)
-$brand-gradient: linear-gradient(90deg, 
-    $color-yellow 0%, 
-    $color-orange-mid 15%, 
-    $color-orange-deep 100%
-);
-
-$color-light-glow: #F79B39;
-
-// Dégradé de fond (Background)
-$body-gradient: linear-gradient(180deg, 
-    rgba($color-light-glow, 0.25) 0%, 
-    $bg-dark 100%
-);
-
-// --- Utilitaires ---
-$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-$border-radius-pill: 50px;
-
-
-// Variables de structure
-$bg-dark: #0a0a0a;
+// Textes
+$text-primary: #f9fafb;
+$text-secondary: #94a3b8;
 $text-white: #ffffff;
 $text-gray: #b3b3b3;
-$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Accents
+$accent-vivid: #8b5cf6;
+$accent-soft: #d8b4fe;
+
+// Brand colors
+$color-yellow: #fef200;
+$color-orange-mid: #f79b39;
+$color-orange-deep: #eb5235;
+$color-light-glow: #f79b39;
+
+// Gradients
+$brand-gradient: linear-gradient(
+  90deg,
+  $color-yellow 0%,
+  $color-orange-mid 15%,
+  $color-orange-deep 100%
+);
+
+$main-gradient: linear-gradient(
+  90deg,
+  #fef200 0%,
+  #f79b39 15%,
+  #eb5235 100%
+);
+
+$body-gradient: linear-gradient(
+  180deg,
+  rgba($color-light-glow, 0.22) 0%,
+  $bg-dark 65%,
+  $bg-dark 100%
+);
+
+// Structure
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition: $transition-smooth;
+$border-radius-pill: 50px;
 $mobile: 600px;
 $tablet: 1024px;
 $indicator-width: 24px;
-
-
-
-// --- Gradients ---
-// Dégradé de fond : Orange doré en haut s'estompant vers le noir
-$body-gradient: linear-gradient(180deg, 
-    rgba($color-light-glow, 0.22) 0%, 
-    $bg-dark 65%,
-    $bg-dark 100%
-);
-
-// Dégradé pour le texte et les boutons (Horizontal)
-$main-gradient: linear-gradient(90deg, #FEF200 0%, #F79B39 15%, #EB5235 100%);
