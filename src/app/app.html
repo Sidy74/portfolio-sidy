@@ -1,10 +1,21 @@
+<div class="main-layout">
+  <div class="menu-burger-mobile" [class.open]="isMenuOpen()" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-<app-movie-card/>
+  <header class="main-header">
+    <div class="menu-burger" [class.open]="isMenuOpen()" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    </header>
 
-<!-- <div class="main-layout">
-  <app-navbar></app-navbar>
-
-  <main class="content-area">
+  <main class="content-area has-fixed-navbar">
     <router-outlet></router-outlet>
   </main>
-</div> -->
+
+  <app-nav-overlay [isOpen]="isMenuOpen()" (closeMenu)="toggleMenu()"></app-nav-overlay>
+</div>

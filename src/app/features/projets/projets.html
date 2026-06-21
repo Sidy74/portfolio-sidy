@@ -1,1 +1,81 @@
-<p>projets works!</p>
+<div class="hero-container" [class.layout-home]="type() === 'home'" [class.layout-projects]="type() === 'projects'">
+  <div class="container">
+    <div class="glass-card">
+      
+      <div class="layer-glows"></div>
+      <div class="layer-grid"></div>
+
+      @if (type() === 'home') {
+        <div class="sidebar-left">
+          </div>
+      }
+
+      <div class="hero-text">
+        <span class="greeting">
+          @if (type() === 'home') { Hello, I am <span class="highlight">Alex</span> }
+          @if (type() === 'projects') { Project <span class="highlight">01</span> }
+        </span>
+        
+        <h1 class="main-title">
+          {{ type() === 'home' ? 'Creative Designer' : 'Amazing corners of the planet' }}
+        </h1>
+        
+        <p class="summary">
+          {{ type() === 'home' ? 'Mon résumé home...' : 'January 21, 21:30 — A deep dive into nature exploration.' }}
+        </p>
+
+        <div class="cta-group">
+          <button class="btn-play">
+            <span class="play-icon">▶</span> Watch Promo
+          </button>
+        </div>
+
+        @if (type() === 'home') {
+          <div class="hero-footer-nav"></div>
+        }
+      </div>
+
+      <div class="right-zone">
+        @if (type() === 'home') {
+          <div class="visual-wrapper">
+            <img class="main-svg" src="assets/home-illustration.svg" alt="Visual">
+          </div>
+        }
+
+        @if (type() === 'projects') {
+          <div class="projects-list">
+            
+            <div class="project-card active">
+              <span class="card-num">02</span>
+              <div class="card-content">
+                <h3>Mountain Sounds</h3>
+                <p>January 22, 15:45</p>
+              </div>
+              <span class="card-play">▶</span>
+            </div>
+
+            <div class="project-card">
+              <span class="card-num">03</span>
+              <div class="card-content">
+                <h3>The Bahamas</h3>
+                <p>January 25, 10:00</p>
+              </div>
+              <span class="card-play">▶</span>
+            </div>
+
+            <div class="project-card">
+              <span class="card-num">04</span>
+              <div class="card-content">
+                <h3>Switzerland</h3>
+                <p>January 27, 12:30</p>
+              </div>
+              <span class="card-play">▶</span>
+            </div>
+
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
+</div>

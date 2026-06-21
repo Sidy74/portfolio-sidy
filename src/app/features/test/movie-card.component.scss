@@ -2,156 +2,206 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-// --- MIXINS UTILES ---
+// ==========================================================================
+// 1. MIXINS & ANIMATIONS (Modernisées pour les standards récents)
+// ==========================================================================
 @mixin flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-// --- ANIMATIONS ---
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
+// Les animations de transition et de reveal majeures sont désormais 
+// enveloppées dans une MQ d'accessibilité pour respecter les préférences système.
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
-  50% {
-    transform: translateY(-12px);
+
+  @keyframes heroReveal {
+    from { opacity: 0; transform: scale(1.15); filter: blur(20px); } // Scale adouci pour éviter l'effet de saut agressif
+    to { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+
+  @keyframes shrinkIn {
+    from { opacity: 0; transform: scale(1.08); filter: blur(12px); } // Zoom initial plus subtil et élégant
+    to { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+
+  @keyframes glowMove {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -20px); }
+  }
+
+  .sidebar-left,
+  .hero-text,
+  app-hero-visual,
+  .hero-footer-nav {
+    opacity: 0;
+    animation: shrinkIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .container {
+    animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 
-// --- CONTENEUR GLOBAL ---
+// Fallback d'accessibilité immédiat si l'utilisateur refuse les mouvements à l'écran
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-left,
+  .hero-text,
+  app-hero-visual,
+  .hero-footer-nav,
+  .container {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+.menu-burger-mobile {
+  display: none;
+}
+
+// ==========================================================================
+// 2. CONFIGURATION DESKTOP (Style par défaut)
+// ==========================================================================
 .hero-container {
-  height: 100vh; // Utilise 100% de la hauteur de l'écran sur desktop
-  height: 100dvh; // Dynamic viewport height (gère proprement les barres d'outils mobiles)
   width: 100%;
   @include flex-center;
   position: relative;
-  padding: 28px 4% 40px; // Augmentation du padding top pour laisser respirer la .top-nav absolue
   box-sizing: border-box;
-  overflow: hidden; // Évite les barres de défilement parasites sur le Hero
-
-  @media (max-width: v.$mobile) {
-    padding: 40px 15px 40px;
-    height: auto; // Laisse le contenu s'empiler naturellement sur mobile
-    min-height: 100dvh;
-  }
+  overflow: hidden;
 }
 
-// --- LE CONTENEUR DE BORDURE (EFFET BENTO PREMIUM) ---
 .container {
   width: 100%;
-  max-width: 1280px; // Limite pour les très grands écrans (4K / Ultrawide)
-  height: 100%; // S'adapte à la hauteur restante du parent
-  max-height: 750px; // Hauteur maximale idéale pour un look Bento compact et équilibré
-  padding: 12px;
+  max-width: 1280px;
+  height: 100%;
+  max-height: 750px;
+  padding: 16px;
   background: rgba(255, 255, 255, 0.12);
   clip-path: url(#bento-wave-mask);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
-
-  @media (max-width: 1024px) {
-    clip-path: none;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.08);
-    max-height: none;
-    height: auto;
-  }
+  transform-origin: center center;
 }
 
-// --- CONTENEUR PANNEAU VERRE DÉPOLI (GLASSMORPHISM) ---
 .glass-card {
   position: relative;
-  background: rgba(18, 18, 18, 0.55);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  background: rgba(18, 18, 18, 0.35);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   clip-path: inherit;
-  padding: 40px; // Aligné et harmonisé (le padding-top excessif a été réduit)
-  height: 100%; // Force la carte à prendre toute la hauteur du .container
+  padding: 32px;
+  height: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 60px 1.2fr 1fr;
-  gap: 40px;
+  grid-template-columns: 60px 1.25fr 1fr;
+  gap: 30px;
   align-items: center;
   z-index: 1;
-  overflow: visible;
+  overflow: hidden;
+
+  .layer-glows {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    overflow: hidden;
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      @media (prefers-reduced-motion: no-preference) {
+        animation: glowMove 12s ease-in-out infinite;
+      }
+    }
+    &::before {
+      top: -20%;
+      left: -10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(v.$color-orange-mid, 0.22) 0%, rgba(v.$color-orange-mid, 0) 70%);
+      filter: blur(60px);
+    }
+    &::after {
+      bottom: -30%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(80px);
+    }
+  }
+
+  .layer-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    opacity: 0.04;
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+    mask-image: radial-gradient(circle at 30% 50%, black 40%, transparent 90%);
+    -webkit-mask-image: radial-gradient(circle at 30% 50%, black 40%, transparent 90%);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 40%, transparent 100%);
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    mask-image: linear-gradient(135deg, black, transparent);
+    -webkit-mask-image: linear-gradient(135deg, black, transparent);
+    z-index: 2;
+  }
 
   .visual-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    opacity: 0.45;
+    opacity: 0.55;
 
     .main-svg {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center right;
-      animation: float 6s ease-in-out infinite;
-      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+      @media (prefers-reduced-motion: no-preference) {
+        animation: float 6s ease-in-out infinite;
+      }
     }
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-    z-index: -2;
-  }
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 50px 1fr;
-    padding: 60px 30px 30px;
-    clip-path: none;
-    border-radius: 22px;
-    height: auto;
-  }
-
-  @media (max-width: v.$mobile) {
-    grid-template-columns: 1fr;
-    padding: 40px 15px 20px;
   }
 }
 
-// --- ACCENTS LATÉRAUX DESIGN (FIXÉ SUR LA HAUTEUR DE CARTE) ---
 .sidebar-left {
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100%; // Remplit fidèlement les 100% de la hauteur imposée par .glass-card
+  height: 100%;
   width: 100%;
   box-sizing: border-box;
-
-  @media (max-width: v.$mobile) {
-    display: none;
-  }
-
-  .menu-burger {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    span {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: v.$text-white;
-      margin: 3px 0;
-      transition: 0.3s;
-    }
-  }
+  animation-delay: 0.25s; // Légèrement réduit pour une meilleure réactivité
 
   .slider-dots {
     display: flex;
@@ -159,23 +209,19 @@
     align-items: center;
     gap: 12px;
     position: relative;
-
-    // --- LA LIGNE VERTICALE AVANT LES DOTS (ÉPAISSEUR RECALIBRÉE À 1px) ---
     &::before {
       content: '';
-      width: 1px; // Corrigé de 8px à 1px pour une ligne fine premium
-      height: 60px; // Hauteur plus raisonnable pour éviter de pousser les éléments hors de la grille
+      width: 1px;
+      height: 60px;
       background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
-      margin-bottom: 8px; // Ajout de l'espace nécessaire avant le premier dot
+      margin-bottom: 8px;
     }
-
     .dot {
       width: 12px;
       height: 12px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
-      transition: all 0.3s ease;
-
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       &.active {
         background: v.$color-orange-mid;
         box-shadow: 0 0 10px v.$color-orange-mid;
@@ -197,31 +243,30 @@
   }
 }
 
-// --- CONTENU TEXTE CENTRAL (COMBINÉ & OPTIMISÉ) ---
+app-hero-visual {
+  animation-delay: 0.45s; // Réduit pour accélérer le "Perceived Performance Index"
+  width: 100%;
+  height: 100%;
+}
+
 .hero-text {
+  z-index: 5;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%; // Assure l'alignement vertical sur toute la hauteur de la grille Bento
-
-  @media (max-width: v.$mobile) {
-    text-align: center;
-    height: auto; // Laisse le flux naturel s'occuper de la hauteur sur mobile
-  }
+  height: 100%;
+  animation-delay: 0.35s;
+  gap: 8px;
 
   .greeting {
-    font-size: clamp(1rem, 2vw, 1.3rem); // Sécurisé pour éviter les débordements verticaux
+    font-size: clamp(1rem, 2vw, 1.3rem);
     color: v.$text-white;
     margin-bottom: 5px;
-
-    .highlight {
-      color: v.$color-orange-mid;
-      font-weight: 700;
-    }
+    .highlight { color: v.$color-orange-mid; font-weight: 700; }
   }
 
   .main-title {
-    font-size: clamp(1.8rem, 4vw, 3.6rem); // Plafond à 3.6rem pour éviter le wrap forcé sur laptop
+    font-size: clamp(1.8rem, 4vw, 3.6rem);
     line-height: 1.15;
     font-weight: 900;
     margin: 10px 0;
@@ -237,482 +282,264 @@
     color: v.$text-gray;
     font-size: clamp(0.85rem, 1.5vw, 1rem);
     line-height: 1.5;
-    max-width: 480px; // Largeur optimale pour laisser le visuel respirer à droite
+    max-width: 480px;
     margin-bottom: 25px;
     text-align: left;
-
-    @media (max-width: 992px) {
-      margin: 0 auto 25px;
-      padding: 0 10px;
-      text-align: center;
-    }
   }
 
-  // --- BOUTONS D'ACTION INCLUS DANS LE FLUX ---
   .cta-group {
     display: flex;
     gap: 15px;
     width: 100%;
+  }
+}
 
-    @media (max-width: 992px) {
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
+.hero-footer-nav {
+  grid-column: 1 / span 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  z-index: 5;
 
-      ::ng-deep app-button {
+  .logo {
+    font-family: 'Great Vibes';
+    font-size: 0.5rem; // Préservé en ultra-discret comme initialement souhaité
+    font-weight: 400;
+    color: v.$text-white;
+    letter-spacing: 0px;
+    white-space: nowrap;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    .icon-social {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+      display: block;
+      svg {
         width: 100%;
-        max-width: 300px;
-        button {
-          width: 100%;
-          box-sizing: border-box;
-        }
+        height: 100%;
+        stroke: currentColor;
+        display: block;
       }
-    }
-
-    @media (min-width: 480px) and (max-width: 992px) {
-      flex-direction: row;
+      &:hover {
+        color: v.$color-orange-mid;
+        transform: translateY(-2px) scale(1.08);
+      }
     }
   }
 
-  // --- BARRE DE NAVIGATION INFÉRIEURE (STYLE FOOTER BENTO CORRIGÉ) ---
-  .hero-footer-nav {
+  .search-icon {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s ease;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 480px; // Parfaitement aligné avec le .summary du dessus
-    margin-top: 35px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08); // Ligne d'accentuation premium
-    box-sizing: border-box;
-
-    @media (max-width: 992px) {
-      margin: 30px auto 0; // Centrage global automatique sur tablettes et mobiles
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2px;
     }
-    .logo {
-      font-family: 'Great Vibes';
-      font-size: 0.5rem;
-      font-weight: 400;
+    &:hover {
       color: v.$text-white;
-      letter-spacing: 0px;
-      white-space: nowrap;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-
-      .icon-social,
-      ::ng-deep .icon-social svg {
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        color: rgba(255, 255, 255, 0.5);
-        transition: all 0.2s ease;
-
-        svg {
-          width: 100%;
-          height: 100%;
-          stroke: currentColor;
-        }
-
-        &:hover {
-          color: v.$color-orange-mid;
-          transform: translateY(-2px) scale(1.08);
-        }
-      }
-    }
-
-    .search-icon {
-      cursor: pointer;
-      color: rgba(255, 255, 255, 0.5);
-      transition: color 0.3s ease;
-      display: flex;
-      align-items: center;
-
-      ::ng-deep svg {
-        width: 18px;
-        height: 18px;
-        stroke-width: 2px;
-      }
-
-      &:hover {
-        color: v.$text-white;
-      }
     }
   }
 }
 
-.glass-card {
-  position: relative;
-  background: rgba(18, 18, 18, 0.35); // Légèrement plus transparent pour laisser passer les couches
-  backdrop-filter: blur(40px); // Augmenté pour un effet dépoli plus dense
-  -webkit-backdrop-filter: blur(40px);
-  clip-path: inherit;
-  padding: 40px 30px;
-  height: 100%;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 60px 1.25fr 1fr;
-  gap: 30px;
-  align-items: center;
-  z-index: 1;
-  overflow: hidden;
-
-  // ==========================================
-  //  COMPLEX LAYERS (EMPILEMENT DES COUCHES)
-  // ==========================================
-
-  // COUCHE 1 : Lueurs de couleurs dynamiques en arrière-plan
-  .layer-glows {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -3;
-    pointer-events: none;
-    overflow: hidden;
-
-    // Lueur Orange en haut à gauche (Rappel de ta charte)
-    &::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: -10%;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(v.$color-orange-mid, 0.22) 0%,
-        rgba(v.$color-orange-mid, 0) 70%
-      );
-      filter: blur(60px);
-    }
-
-    // Lueur Subtile Sombre/Bleutée ou Violette en bas à droite pour le contraste
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      right: -10%;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0) 70%);
-      filter: blur(80px);
-    }
-  }
-
-  // COUCHE 2 : Grille de lignes technologiques (Subtle UI Grid)
-  .layer-grid {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -2;
-    pointer-events: none;
-    opacity: 0.04; // Très subtil pour ne pas surcharger
-    background-size: 40px 40px;
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0) 1px, transparent 1px);
-    mask-image: radial-gradient(circle at 30% 50%, black 40%, transparent 90%);
-    -webkit-mask-image: radial-gradient(circle at 30% 50%, black 40%, transparent 90%);
-  }
-
-  // COUCHE 3 : Gradient de surface brillant (Reflet biaisé sur le verre)
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.01) 40%,
-      transparent 100%
-    );
-    z-index: -1;
-  }
-
-  // COUCHE 4 : Bordure interne fine (Inner Border Premium Effect)
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    mask-image: linear-gradient(135deg, black, transparent);
-    -webkit-mask-image: linear-gradient(135deg, black, transparent);
-    z-index: 2; // Passe au-dessus du fond pour simuler le reflet de la tranche
-  }
-
-  // COUCHE 5 : Ton wrapper visuel (conserve tes propriétés)
-  .visual-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; // Aligné avec le plan de rendu des illustrations
-    overflow: hidden;
-    pointer-events: none;
-    opacity: 0.55; // Légèrement augmenté pour l'immersion
-
-    .main-svg {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center right;
-      animation: float 6s ease-in-out infinite;
-      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
-    }
-  }
-
-  // ==========================================
-  //  STRUCTURE DU CONTENU (Reste inchangée)
-  // ==========================================
-  .sidebar-left {
-    z-index: 5; // Assure que les interactions restent au-dessus des calques
-  }
-
-  .hero-text {
-    z-index: 5; // Assure que le texte et les boutons restent cliquables
-  }
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 50px 1fr;
-    padding: 40px 30px;
+// ==========================================================================
+// 3. REFONTE RESPONSIVE TABLETTE & ÉCRANS MOYENS
+// ==========================================================================
+@media (max-width: 1200px) {
+  .container {
     clip-path: none;
-    border-radius: 22px;
+    border-radius: 24px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    max-height: none;
     height: auto;
   }
 
-  @media (max-width: v.$mobile) {
-    grid-template-columns: 1fr;
+  .glass-card {
+    display: flex !important; 
+    flex-direction: column !important;
     padding: 30px 20px;
-  }
-}
+    gap: 25px;
+    clip-path: none;
+    border-radius: 22px;
+    height: auto;
 
-// =========================
-// ANIMATIONS
-// =========================
+    .visual-wrapper {
+      position: absolute !important;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0.12 !important;
+      z-index: -1;
+      margin: 0 !important;
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-// Parent principal
-@keyframes heroReveal {
-  from {
-    opacity: 0;
-    transform: scale(1.35);
-    filter: blur(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-}
-
-// Enfants
-@keyframes shrinkIn {
-  from {
-    opacity: 0;
-    transform: scale(1.25);
-    filter: blur(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-}
-
-// Glow
-@keyframes glowMove {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(40px, -30px);
-  }
-}
-
-.container {
-  animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: center center;
-}
-.sidebar-left,
-.hero-text,
-app-hero-visual {
-  opacity: 0;
-  animation: shrinkIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.sidebar-left {
-  animation-delay: 0.4s;
-}
-
-.hero-text {
-  animation-delay: 0.6s;
-}
-
-app-hero-visual {
-  animation-delay: 0.8s;
-}
-.layer-glows::before,
-.layer-glows::after {
-  animation: glowMove 12s ease-in-out infinite;
-}
-
-
-.menu-burger {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  gap: 4px; // Espace régulier entre les barres
-  z-index: 50;
-
-  span {
-    display: block;
-    width: 20px; 
-    height: 2px;
-    background: v.$text-white;
-    border-radius: 2px;
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    transform-origin: center;
-  }
-
-  // --- TRANSFORMATION EN "X" UNIQUE AU CLIC ---
-  &.open {
-    span:nth-child(1) {
-      transform: translateY(6px) rotate(45deg);
-      background: v.$color-orange-mid; // Changement de couleur d'accentuation
-    }
-
-    span:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0); // Disparition de la ligne centrale
-    }
-
-    span:nth-child(3) {
-      transform: translateY(-6px) rotate(-45deg);
-      background: v.$color-orange-mid;
+      .main-svg {
+        object-fit: cover !important;
+        object-position: center center !important;
+      }
     }
   }
-}
 
-// --- GESTION DU BURGER MOBILE FICTIONNEL ---
-.menu-burger-mobile {
-  display: none; // Caché par défaut sur Desktop
+  .sidebar-left {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: auto !important;
+    width: 100%;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    animation-delay: 0s !important; // Pas de décalage d'animation sur petit écran
 
-  @media (max-width: 1024px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    .slider-dots {
+      flex-direction: row !important;
+      gap: 8px;
+      &::before { display: none; }
+    }
+
+    .vertical-text {
+      writing-mode: horizontal-tb !important;
+      transform: none !important;
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .hero-text {
+    width: 100% !important;
+    height: auto !important;
+    text-align: center;
     align-items: center;
+    animation-delay: 0s !important;
+
+    .summary { margin: 0 auto 20px; text-align: center; }
+    .cta-group { justify-content: center; margin-bottom: 20px; }
+  }
+
+  app-hero-visual {
+    width: 100% !important;
+    max-width: 450px;
+    height: auto !important;
+    margin: 15px auto 0 !important;
+    display: block !important;
+    animation-delay: 0s !important;
+  }
+
+  .hero-footer-nav {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    animation-delay: 0s !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-text {
+    .cta-group {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      ::ng-deep app-button {
+        width: 100%;
+        max-width: 300px;
+        button { width: 100%; box-sizing: border-box; }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// 4. CONFIGURATION MOBILE STRICTE
+// ==========================================================================
+@media (max-width: v.$mobile) {
+  // Ajustement pour supprimer complètement les délais de transition en cascade 
+  // car l'utilisateur mobile requiert un rendu interactif immédiat.
+  .sidebar-left,
+  .hero-text,
+  app-hero-visual,
+  .hero-footer-nav {
+    animation-delay: 0s !important;
+  }
+
+  .menu-burger-mobile {
+    display: flex;
     position: absolute;
-    top: 25px;
-    right: 25px;
-    width: 40px;
-    height: 40px;
-    gap: 4px;
-    z-index: 100; // Passe au-dessus de tout le monde
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+    top: 20px;
+    right: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 16px;
+    z-index: 50;
     cursor: pointer;
-    transition: all 0.3s ease;
 
     span {
       display: block;
-      width: 18px;
+      width: 100%;
       height: 2px;
-      background: v.$text-white;
-      border-radius: 2px;
+      background-color: v.$text-white;
       transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      transform-origin: center;
+      transform-origin: left center;
     }
-
     &.open {
-      background: rgba(v.$color-orange-mid, 0.15);
-      border-color: rgba(v.$color-orange-mid, 0.3);
-      
-      span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: v.$color-orange-mid; }
-      span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-      span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: v.$color-orange-mid; }
+      span:nth-child(1) { transform: rotate(45deg); }
+      span:nth-child(2) { width: 0%; opacity: 0; }
+      span:nth-child(3) { transform: rotate(-45deg); }
     }
   }
-}
 
-// --- AJUSTEMENT RESPONSIVE DE LA GRILLE DE LA CARRE ---
-.glass-card {
-  // ... tes propriétés desktop actuelles ...
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr; // On passe sur une seule colonne propre
-    padding: 60px 30px 40px;
-    gap: 40px;
+  .hero-container {
+    padding: 10px !important;
+    height: auto !important;
+    min-height: calc(100dvh - 20px);
   }
 
-  @media (max-width: v.$mobile) {
-    padding: 40px 20px 30px;
-    gap: 30px;
-  }
-}
-
-// --- REPOSITIONNEMENT DU VISUEL SUR MOBILE ---
-.visual-wrapper {
-  // ... tes propriétés actuelles ...
-
-  @media (max-width: 1024px) {
-    grid-row: 1; // Force le visuel 3D/Illustration à passer TOUT EN HAUT sur mobile
-    max-width: 320px;
-    height: 280px;
-    justify-self: center;
-    margin-bottom: 10px;
+  .glass-card {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 24px 16px !important;
+    gap: 15px !important;
   }
 
-  @media (max-width: v.$mobile) {
-    max-width: 260px;
-    height: 220px;
+  .sidebar-left {
+    display: none !important; 
   }
-}
 
-.hero-text {
-  @media (max-width: 1024px) {
-    grid-row: 2; // Le texte vient naturellement se placer sous le visuel
-    text-align: center;
-    align-items: center;
+  .hero-footer-nav {
+    display: flex !important;
+    flex-direction: row !important; 
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+    margin-top: auto; 
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    .social-icons {
+      gap: 15px !important;
+    }
+  }
+
+  app-hero-visual {
+    max-width: 100%;
+    width: 100%;
+    height: auto !important;
   }
 }

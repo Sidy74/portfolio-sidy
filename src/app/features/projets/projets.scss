@@ -1,0 +1,201 @@
+@use '../../scss/variables' as v;
+
+// ... (Garde tes mixins, keyframes et .hero-container de l'étape précédente) ...
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  height: 90vh;
+  max-height: 680px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  clip-path: url(#bento-wave-mask);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// ==========================================================================
+// PANNEAU DÉPOLI MULTI-LOOKS
+// ==========================================================================
+.glass-card {
+  position: relative;
+  background: rgba(18, 18, 18, 0.35);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  clip-path: inherit;
+  padding: 32px 40px;
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  align-items: center;
+  z-index: 1;
+  overflow: hidden;
+  gap: 30px;
+
+  // --- LES COUCHES DE FOND (Glows, Grid, etc. Restent identiques) ---
+  &::before, &::after, .layer-glows, .layer-grid {
+    // ... garde le code des couches de l'étape précédente ...
+  }
+}
+
+// ==========================================================================
+// GESTION DES VARIANTES PAR LA CLASSE PARENTE
+// ==========================================================================
+
+// --- COMPORTEMENT PAGE ACCUEIL ---
+.hero-container.layout-home {
+  .glass-card {
+    grid-template-columns: 60px 1.25fr 1fr; /* 3 colonnes avec sidebar */
+  }
+}
+
+// --- COMPORTEMENT PAGE PROJETS (TON IMAGE) ---
+.hero-container.layout-projects {
+  .container {
+    clip-path: none; 
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card {
+    grid-template-columns: 1.1fr 0.9fr; /* 2 colonnes égales : Texte / Liste */
+    padding: 32px;
+    background: rgba(12, 16, 15, 0.75); /* Teinte sombre/nature comme ta photo */
+  }
+
+  // Floutage et effet de l'arrière-plan de la zone entière avec la photo d'éléphant
+  // Idéalement, tu mettras l'image du projet actif en background de .glass-card !
+  background-image: linear-gradient(to right, rgba(0,0,0,0.6) 30%, transparent), url('/assets/elephant-bg.jpg');
+  background-size: cover;
+  background-position: center;
+
+  // Style spécifique pour le bouton Play / Watch Promo
+  .btn-play {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+  h1, .main-title {
+    font-size: calc(1.8rem + 1vw); /* Taille fluide */
+    line-height: 1.1;
+  }
+
+  // ==========================================
+  // DESIGN DE LA LISTE DE PROJETS (DROITE)
+  // ==========================================
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    justify-content: center;
+    overflow-y: auto; /* Permet de scroller les petits projets si la liste est longue */
+    padding-right: 5px;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+    .project-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      overflow: hidden;
+
+      // Image de fond de la mini carte
+      background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/project-thumb.jpg');
+      background-size: cover;
+      background-position: center;
+
+      .card-num {
+        font-size: 1.8rem;
+        font-weight: 800;
+        opacity: 0.8;
+        color: #fff;
+      }
+
+      .card-content {
+        flex-grow: 1;
+        h3 {
+          margin: 0 0 4px 0;
+          font-size: 1.1rem;
+          color: #fff;
+          font-weight: 600;
+        }
+        p {
+          margin: 0;
+          font-size: 0.8rem;
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      .card-play {
+        width: 32px;
+        height: 32px;
+        background: #fff;
+        color: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        padding-left: 2px; /* Aligne le triangle */
+        opacity: 0.7;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      // --- EFFETS HOVER & ACTIVE (Comme sur ta photo) ---
+      &:hover, &.active {
+        transform: translateX(-5px);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+        .card-play {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+
+      &.active {
+        border-color: v.$color-orange-mid; /* Ou couleur d'accent de ton choix */
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// RESPONSIVE MUTATION
+// ==========================================================================
+@media (max-width: 1024px) {
+  .hero-container.layout-projects {
+    .glass-card {
+      grid-template-columns: 1fr; /* Repasse sur une colonne sur tablette/mobile */
+      height: auto;
+    }
+    .projects-list {
+      margin-top: 20px;
+    }
+  }
+}

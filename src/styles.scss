@@ -1,46 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'app/scss/variables' as v;
 
-html {
+// Styles globaux de l'application (Mise en page et Scrollbar)
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   background-color: #080705;
 
-}
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Anciens Edge et IE */
 
+  &::-webkit-scrollbar {
+    display: none; 
+  }
+}
 
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: v.$body-gradient;
-  background-attachment: fixed; // Important pour que le dégradé reste stable au scroll
   color: v.$text-white;
   min-height: 100vh;
   position: relative;
+  background: transparent; 
 
   // --- LE FIX POUR LE FOND MOBILE ---
   &::before {
-    content: "";
-    position: fixed; // Fixe l'élément par rapport à la fenêtre
+    content: '';
+    position: fixed; /* Fixe l'élément par rapport à la fenêtre */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: v.$body-gradient; // Ton dégradé défini dans variables.scss
-    z-index: -1; // Place le fond derrière le contenu
-    pointer-events: none; // Empêche toute interaction avec le fond
+    background: v.$body-gradient; /* Dégradé stable qui ne bouge pas au scroll */
+    z-index: -1; /* Place le fond derrière le contenu */
+    pointer-events: none; /* Empêche toute interaction avec le fond */
   }
 
   main {
     padding-top: 80px;
-    width: 100;
+    width: 100%; 
+    box-sizing: border-box; /* Recommandé pour éviter que le padding ajoute de la largeur */
+
     // Padding adaptatif
-    padding: 64px; // Desktop (par défaut)
+    padding: 64px; /* Desktop (par défaut) */
 
     @media (max-width: v.$tablet) {
-      // padding: 32px; // Tablette
+      // padding: 32px; 
     }
 
     @media (max-width: v.$mobile) {
-      padding: 20px 16px; // Mobile (on réduit surtout les côtés)
+      padding: 20px 16px; 
     }
   }
 }

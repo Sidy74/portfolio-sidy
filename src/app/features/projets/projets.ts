@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
+
+export type HeroLayoutType = 'home' | 'projects';
 
 @Component({
   selector: 'app-projets',
@@ -7,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './projets.scss',
 })
 export class Projets {
+type = input<HeroLayoutType>('home');
 
+isProjectsLayout = computed(() => this.type() === 'projects');
 }

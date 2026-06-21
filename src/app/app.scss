@@ -1,4 +1,186 @@
 @use './scss/variables' as v;
-// Optionnel : Ajustement pour la Navbar Fixe
-// Si votre navbar est fixée en haut (80px), le body a besoin d'un margin-top
-// pour ne pas que le contenu passe dessous.
+
+html,
+body {
+
+  scrollbar-width: none;
+
+  /* Pour Chrome, Safari, Edge et Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Le parent principal de votre app Angular */
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh; /* Permet au site de s'étirer si le contenu dépasse */
+  position: relative;
+}
+
+// ==========================================================================
+// 2. EN-TÊTE ET NAVIGATION (DESKTOP FIXE)
+// ==========================================================================
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 90;
+  transition: all 0.3s ease;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+
+// ==========================================================================
+// 3. ZONE DE CONTENU PRINCIPAL
+// ==========================================================================
+.content-area.has-fixed-navbar {
+  width: 100%;
+  padding-top: 60px; /* Compense la hauteur de la barre fixe */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+// ==========================================================================
+// 4. SECTION HERO (PREND TOUT L'ÉCRAN RESTANT)
+// ==========================================================================
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px); /* Parfait : prend exactement l'écran moins le header */
+  overflow: hidden; /* Utile ici pour isoler vos animations (.background-glow) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* Vos animations restent inchangées */
+  animation: heroReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  .hero-title {
+    animation: shrinkIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  }
+
+  .hero-badge {
+    animation:
+      shrinkIn 1s ease-out 0.5s both,
+      float 5s ease-in-out 1.5s infinite;
+  }
+
+  .background-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(v.$color-orange-mid, 0.2) 0%, transparent 70%);
+    z-index: -1;
+    animation: glowMove 10s ease-in-out infinite alternate;
+  }
+}
+
+// ==========================================================================
+// 5. BOUTONS BURGERS (DESKTOP & MOBILE)
+// ==========================================================================
+/* Vos boutons burger restent parfaitement fonctionnels en l'état */
+// ==========================================================================
+// 5. BOUTONS BURGERS (DESKTOP & MOBILE)
+// ==========================================================================
+.menu-burger {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  gap: 4px;
+  z-index: 95;
+
+  span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: v.$text-white;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-origin: center;
+  }
+
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+      background: v.$color-orange-mid;
+    }
+    span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+      background: v.$color-orange-mid;
+    }
+  }
+}
+
+.menu-burger-mobile {
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 40px;
+    height: 40px;
+    gap: 4px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: v.$text-white;
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      transform-origin: center;
+    }
+
+    &.open {
+      background: rgba(v.$color-orange-mid, 0.15);
+      border-color: rgba(v.$color-orange-mid, 0.3);
+
+      span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+        background: v.$color-orange-mid;
+      }
+      span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+        background: v.$color-orange-mid;
+      }
+    }
+  }
+}

@@ -11,9 +11,7 @@
         <div class="title-verified-row">
           <h2 class="card-title">{{ slide.title }}</h2>
           <svg viewBox="0 0 24 24" class="verified-badge" fill="currentColor">
-            <path
-              d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-            />
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
           </svg>
         </div>
         <h3 class="card-subtitle">{{ slide.subtitle }}</h3>
@@ -28,23 +26,18 @@
 
         <ul class="slide-details">
           <li *ngFor="let detail of slide.details">
-            <svg
-              viewBox="0 0 24 24"
-              class="check-icon"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            >
+            <svg viewBox="0 0 24 24" class="check-icon" fill="none" stroke="currentColor" stroke-width="3">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
             {{ detail }}
           </li>
         </ul>
-
-        <div class="card-actions-row">
-          <app-button [label]="slide.btnText" type="outline"></app-button>
-        </div>
       </div>
+
+      <div class="card-actions-row">
+        <app-button [label]="slide.btnText" type="outline"></app-button>
+      </div>
+
     </div>
   </div>
 
