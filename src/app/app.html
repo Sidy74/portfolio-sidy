@@ -1,3 +1,5 @@
+<app-nav-overlay [isOpen]="isMenuOpen()" (closeMenu)="toggleMenu()"></app-nav-overlay>
+
 <div class="main-layout">
   <div class="menu-burger-mobile" [class.open]="isMenuOpen()" (click)="toggleMenu()">
     <span></span>
@@ -11,11 +13,9 @@
       <span></span>
       <span></span>
     </div>
-    </header>
+  </header>
 
   <main class="content-area has-fixed-navbar">
     <router-outlet></router-outlet>
   </main>
-
-  <app-nav-overlay [isOpen]="isMenuOpen()" (closeMenu)="toggleMenu()"></app-nav-overlay>
 </div>

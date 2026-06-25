@@ -49,6 +49,18 @@
       height: 18px;
     }
   }
+
+  @media (max-width: v.$mobile) {
+    height: 40px;          // On réduit la hauteur sur mobile pour gagner de l'espace vertical
+    padding: 0 12px;       // Réduction drastique du padding interne pour éviter le débordement
+    font-size: 14px;       // Police légèrement plus petite pour que le texte tienne
+    gap: 8px;              // On resserre l'espace entre l'icône et le texte
+
+    .btn-icon lucide-icon {
+      width: 15px;         // Icône légèrement plus petite sur mobile
+      height: 15px;
+    }
+  }
 }
 // &:disabled,
 // &.is-disabled {

@@ -1,81 +1,106 @@
-<div class="hero-container" [class.layout-home]="type() === 'home'" [class.layout-projects]="type() === 'projects'">
-  <div class="container">
-    <div class="glass-card">
-      
-      <div class="layer-glows"></div>
-      <div class="layer-grid"></div>
+<div class="portfolio-border-wrapper">
+  <div class="portfolio-container" [style.backgroundImage]="'url(' + selectedProject().image + ')'">
+    <main class="featured-project">
+      <header class="portfolio-header">
+        <div class="logo-brand">Sidy Diarra</div>
 
-      @if (type() === 'home') {
-        <div class="sidebar-left">
-          </div>
-      }
+        <nav class="filter-nav">
+          <a href="#" class="active">Tous</a>
+          <a href="#">Web</a>
+          <a href="#">Mobile</a>
+          <a href="#">UI/UX</a>
+        </nav>
+      </header>
 
-      <div class="hero-text">
-        <span class="greeting">
-          @if (type() === 'home') { Hello, I am <span class="highlight">Alex</span> }
-          @if (type() === 'projects') { Project <span class="highlight">01</span> }
+      <div class="project-details" [attr.data-project-id]="selectedProject().id">
+        <span class="project-index">
+          {{ selectedProject().id }}
         </span>
-        
-        <h1 class="main-title">
-          {{ type() === 'home' ? 'Creative Designer' : 'Amazing corners of the planet' }}
+
+        <span class="project-tag">
+          {{ selectedProject().category }}
+        </span>
+
+        <h1>
+          {{ selectedProject().title }}
         </h1>
-        
-        <p class="summary">
-          {{ type() === 'home' ? 'Mon résumé home...' : 'January 21, 21:30 — A deep dive into nature exploration.' }}
+
+        <p class="project-desc">
+          {{ selectedProject().description }}
         </p>
 
-        <div class="cta-group">
-          <button class="btn-play">
-            <span class="play-icon">▶</span> Watch Promo
-          </button>
+        <div class="tech-badges">
+          @for (tech of selectedProject().technologies; track $index) {
+            <span class="badge">
+              {{ tech }}
+            </span>
+          }
         </div>
 
-        @if (type() === 'home') {
-          <div class="hero-footer-nav"></div>
-        }
+        <div class="project-actions">
+          @if (selectedProject().githubUrl) {
+            <app-button
+              label="Code source"
+              type="outline"
+              [iconName]="lucideFolderGit2"
+              (btnClick)="openExternalLink(selectedProject().githubUrl)"
+            />
+          }
+          @if (selectedProject().liveUrl) {
+            <app-button
+              label="Voir le site"
+              type="primary-double"
+              [iconName]="externalLink"
+              (btnClick)="openExternalLink(selectedProject().liveUrl)"
+            />
+          }
+        </div>
       </div>
+    </main>
 
-      <div class="right-zone">
-        @if (type() === 'home') {
-          <div class="visual-wrapper">
-            <img class="main-svg" src="assets/home-illustration.svg" alt="Visual">
+    <div class="projects-list-wrapper">
+      <aside class="projects-list" #projectsList>
+        @for (project of projects; track project.id; let i = $index) {
+          <div
+            class="project-card"
+            [class.active]="i === selectedProjectIndex()"
+            [style.backgroundImage]="'url(' + project.image + ')'"
+            (click)="selectProject(project)"
+          >
+            <div class="card-inner">
+              <div class="card-meta">
+                <span class="card-num">
+                  {{ project.id }}
+                </span>
+
+                <div class="card-titles">
+                  <h3>{{ project.title }}</h3>
+                  <p>{{ project.category }}</p>
+                </div>
+              </div>
+
+              <app-button
+                class="card-btn"
+                label="Voir"
+                [type]="selectedProject().id === project.id ? 'primary-double' : 'outline'"
+                [iconName]="externalLink"
+                (btnClick)="handleButtonClick($event, project.liveUrl)"
+              />
+            </div>
           </div>
         }
+      </aside>
 
-        @if (type() === 'projects') {
-          <div class="projects-list">
-            
-            <div class="project-card active">
-              <span class="card-num">02</span>
-              <div class="card-content">
-                <h3>Mountain Sounds</h3>
-                <p>January 22, 15:45</p>
-              </div>
-              <span class="card-play">▶</span>
-            </div>
-
-            <div class="project-card">
-              <span class="card-num">03</span>
-              <div class="card-content">
-                <h3>The Bahamas</h3>
-                <p>January 25, 10:00</p>
-              </div>
-              <span class="card-play">▶</span>
-            </div>
-
-            <div class="project-card">
-              <span class="card-num">04</span>
-              <div class="card-content">
-                <h3>Switzerland</h3>
-                <p>January 27, 12:30</p>
-              </div>
-              <span class="card-play">▶</span>
-            </div>
-
-          </div>
+      <div class="projects-dots-nav">
+        @for (project of projects; track project.id; let i = $index) {
+          <button
+            class="dot"
+            [class.active]="i === selectedProjectIndex()"
+            (click)="selectProject(project)"
+            [attr.aria-label]="'Aller au projet ' + project.title"
+          ></button>
         }
       </div>
-
     </div>
   </div>
 </div>
