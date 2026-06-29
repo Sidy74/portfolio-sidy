@@ -1,0 +1,167 @@
+// Ajuste le chemin relatif vers ton fichier de variables global
+@use '../../scss/variables' as *;
+
+app-terminal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999 !important;
+  pointer-events: none;
+}
+
+.terminal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: rgba($bg-dark, 0.75); // Utilisation de ton fond sombre global
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  pointer-events: auto;
+  animation: terminalFadeIn 0.25s ease-out forwards;
+}
+
+.terminal-window {
+  width: 100%;
+  max-width: 52rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: $surface-card; // Ta couleur premium violette/sombre pour la carte
+  border: 1px solid rgba($accent-soft, 0.15); // Fine bordure subtile avec ton accent violet clair
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  color: $text-primary; // Ton texte principal clair
+  animation: terminalScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background-color: rgba($bg-dark, 0.5); // Arrière-plan de l'en-tête légèrement plus sombre
+  border-bottom: 1px solid rgba($accent-soft, 0.15);
+  user-select: none;
+
+  .window-controls {
+    display: flex;
+    gap: 0.5rem;
+
+    span,
+    button {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      transition: $transition-smooth; // Utilisation de ta transition fluide
+    }
+    .close-btn {
+      background-color: $color-orange-deep; // Remplacement par ta couleur de marque rouge/orange
+      cursor: pointer;
+      &:hover {
+        filter: brightness(0.8);
+      }
+    }
+    .minimize-btn {
+      background-color: $color-orange-mid; // Remplacement par ton orange moyen
+    }
+    .maximize-btn {
+      background-color: $accent-vivid; // Touche de ton accent violet vif pour le bouton vert initial
+    }
+  }
+
+  .terminal-title {
+    color: $text-secondary; // Ton texte secondaire
+    font-size: 0.8rem;
+  }
+  .empty-spacer {
+    width: 42px;
+  }
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  height: 26rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $surface-card;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($accent-soft, 0.3); // Scrollbar reprenant ton thème violet
+    border-radius: 3px;
+    &:hover {
+      background: $accent-soft;
+    }
+  }
+
+  .line-input-user {
+    color: $color-orange-mid; // Les commandes tapées prennent une teinte de ton dégradé
+    font-weight: 500;
+  }
+  .line-error {
+    color: $color-orange-deep; // Ton orange profond pour les erreurs logicielles
+    white-space: pre-line;
+  }
+  .line-output {
+    color: $text-gray; // Ton gris désigné pour le texte brut de la console
+    white-space: pre-line;
+    line-height: 1.6;
+  }
+}
+
+.terminal-form {
+  display: flex;
+  align-items: center;
+  color: $color-orange-mid;
+  font-weight: 500;
+  margin-top: 0.25rem;
+
+  .prompt-prefix {
+    user-select: none;
+    margin-right: 0.5rem;
+  }
+
+  .terminal-input-field {
+    flex: 1;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: $text-white; // Ton blanc pur pour la commande en cours d'écriture
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+  }
+}
+
+@keyframes terminalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes terminalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,41 @@
+@if (isOpen()) {
+  <div class="terminal-overlay" (click)="closeTerminal()">
+    <div class="terminal-window" (click)="$event.stopPropagation()">
+      <div class="terminal-header">
+        <div class="window-controls">
+          <button (click)="closeTerminal()" class="close-btn"></button>
+          <span class="minimize-btn"></span>
+          <span class="maximize-btn"></span>
+        </div>
+        <div class="terminal-title">sidy.dev — bash</div>
+        <div class="empty-spacer"></div>
+      </div>
+
+      <div #terminalBody class="terminal-body" (click)="focusInput()">
+        @for (line of history(); track $index) {
+          @if (line.type === 'input') {
+            <div class="line-input-user">{{ line.text }}</div>
+          } @else if (line.type === 'error') {
+            <div class="line-error">{{ line.text }}</div>
+          } @else {
+            <div class="line-output">{{ line.text }}</div>
+          }
+        }
+
+        <form (submit)="handleCommand($event)" class="terminal-form">
+          <span class="prompt-prefix">visiteur&#64;sidy.dev:~$</span>
+          <input
+            #terminalInput
+            type="text"
+            [(ngModel)]="currentInput"
+            name="terminalInput"
+            [disabled]="isSystemTyping()"
+            class="terminal-input-field"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+}

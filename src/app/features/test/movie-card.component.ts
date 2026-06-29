@@ -9,10 +9,18 @@ import {
 } from '@lucide/angular';
 import { HeroVisualComponent } from './hero-visual/hero-visual.component';
 import { NavOverlayComponent } from '../nav-overlay/nav-overlay.component';
+import { TerminalComponent } from '../terminal/terminal';
+import { TerminalTriggerComponent } from '../terminal/terminal-trigger';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [Button, HeroVisualComponent, NavOverlayComponent],
+  imports: [
+    Button,
+    HeroVisualComponent,
+    NavOverlayComponent,
+    TerminalComponent,
+    TerminalTriggerComponent,
+  ],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss',
   providers: [
