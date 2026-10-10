@@ -5,6 +5,8 @@
   [class.is-disabled]="disabled()"
 >
   <span class="btn-text">{{ label() }}</span>
+  <!-- Permet d'injecter des SVG passés entre <app-button> ... </app-button> -->
+  <ng-content></ng-content>
 
   @if (iconName()) {
     @if (iconName()) {

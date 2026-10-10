@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Button } from '../../shared/component/button/button';
 import { LucideDownload, LucideSend, provideLucideIcons } from '@lucide/angular';
+import { TerminalTriggerComponent } from '../terminal/terminal-trigger';
+import { TerminalComponent } from '../terminal/terminal';
 
 @Component({
   selector: 'app-home',
-  imports: [Button],
+  imports: [Button, TerminalTriggerComponent, TerminalComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   providers: [provideLucideIcons(LucideDownload,LucideSend)],
@@ -24,5 +26,10 @@ export class Home {
   sendEmail() {
     // Ouvre le client mail par défaut avec ton adresse
     window.location.href = 'mailto:sidydiarra1290@gmail.com?subject=Contact%20depuis%20le%20Portfolio';
+  }
+
+  openWhatsapp() {
+    // Redirige vers WhatsApp avec ton numéro (ex: +223XXXXXXXX pour le Mali)
+    window.open('https://wa.me/22300000000', '_blank');
   }
 }

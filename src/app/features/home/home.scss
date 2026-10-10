@@ -75,7 +75,6 @@
     text-align: center;
     padding: 12px;
 
-    padding-top: 100px; // Laisse la place pour ton nom en haut
     padding-bottom: 100px; // Laisse la place pour la Tab Bar en bas
     min-height: auto;
     .sidebar-left {
@@ -85,6 +84,21 @@
 }
 
 .hero-text {
+  @media (max-width: v.$mobile) {
+    // --- Mobile montre sur l'image
+    margin-top: -180px;
+    z-index: 50;
+    position: relative;
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.5) 10%,
+      transparent 100%
+    );
+  }
+
   .greeting {
     font-size: clamp(1.1rem, 3vw, 1.5rem); // Taille fluide
     color: v.$text-white;
@@ -92,6 +106,11 @@
     .highlight {
       color: v.$color-orange-mid;
       font-weight: 700;
+    }
+    @media (max-width: v.$mobile) {
+      font-weight: bolder;
+      text-align: start;
+      font-size: clamp(1rem, 4vw, 1.2rem); // Taille plus petite sur mobile
     }
   }
 
@@ -105,6 +124,11 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 900;
+    // --- Mobile (Basculement en colonne) ---
+    @media (max-width: v.$mobile) {
+      font-size: clamp(1.8rem, 4vw, 2rem); // Taille plus petite sur mobile
+      text-align: start;
+    }
   }
 
   .summary {
@@ -119,27 +143,50 @@
       margin: 0 auto 30px;
       padding: 0 10px;
     }
+    @media (max-width: v.$mobile) {
+      text-align: start;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      max-width: 100%;
+    }
   }
 }
 
 .cta-group {
   display: flex;
   gap: 15px;
+  align-items: center;
 
   @media (max-width: 992px) {
-    justify-content: center;
-    flex-direction: column; // Boutons l'un sur l'autre sur petit mobile
-    align-items: center;
+    flex-direction: column; // Empile le CV en haut et le conteneur en bas
+    align-items: stretch;
+    width: 100%;
 
-    ::ng-deep app-btn-primary,
-    ::ng-deep app-btn-outline {
-      width: 100%; // Les boutons prennent toute la largeur dispo
-      max-width: 300px;
+    // Ligne 2 : Force les deux boutons (Email et WhatsApp) sur une seule et même ligne
+    .row-secondary-buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      width: 100%;
+
+      app-button {
+        flex: 1; // S'assure qu'ils partagent équitablement la largeur (50% / 50%)
+        
+        ::ng-deep button {
+          width: 100% !important;
+          justify-content: center;
+        }
+      }
     }
   }
 
-  @media (min-width: 480px) and (max-width: 992px) {
-    flex-direction: row; // On garde les boutons côte à côte sur tablettes
+  @media (min-width: 993px) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    // Sur desktop, on désactive le conteneur pour aligner les 3 boutons à la suite
+    .row-secondary-buttons {
+      display: contents; 
+    }
   }
 }
 
