@@ -69,10 +69,8 @@
 
   // --- Mobile (Basculement en colonne) ---
   @media (max-width: v.$mobile) {
- 
-      
-      // --- Tablette & Petit Desktop ---
-      display: grid;
+    // --- Tablette & Petit Desktop ---
+    display: grid;
     grid-template-columns: 1fr;
     text-align: center;
     padding: 12px;

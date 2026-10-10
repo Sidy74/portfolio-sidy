@@ -27,9 +27,9 @@
     </p>
 
     <div class="cta-group">
-      <app-button label="Telecharger mon cv" type="primary-double" [iconName]="downloadIcon"></app-button>
+      <app-button  label="Telecharger mon cv" type="primary-double" [iconName]="downloadIcon" (btnClick)="downloadCv()" ></app-button>
 
-      <app-button label="Envoie moi un message" type="outline" [iconName]="sendIcon"></app-button>
+      <app-button label="Envoie moi un message" type="outline" [iconName]="sendIcon" (btnClick)="sendEmail()"></app-button>
     </div>
   </div>
 
