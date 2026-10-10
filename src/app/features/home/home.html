@@ -1,22 +1,35 @@
+
+
 <section class="hero-container">
+
+  <!-- Sidebar de gauche ajoutée ici -->
+  <aside class="sidebar-left">
+    <div class="slider-dots">
+      <span class="dot"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+    </div>
+    <div class="vertical-text">PORTFOLIO</div>
+  </aside>
+  
   <div class="hero-text">
     <p class="greeting">Bonjour, Je suis <span class="highlight">Sidy</span></p>
 
     <h1 class="main-title">
-      Ingénieur Logiciel Full Stack <br />
-      & Designer UI/UX.
+      Ingénieur Logiciel Full Stack, <br /> UI/UX Designer & IT Support
     </h1>
 
     <p class="summary">
-      Je conçois et développe des solutions numériques robustes, de l'architecture backend à
-      l'interface utilisateur pixel-perfect. Actuellement en Master, je transforme des concepts
+      Je conçois, développe et assure le support de solutions numériques robustes, de l'architecture backend au
+      déploiement et à l'interface utilisateur pixel-perfect. Actuellement en Master, je transforme des concepts
       complexes en produits fluides et performants.
+
     </p>
 
     <div class="cta-group">
       <app-button label="Telecharger mon cv" type="primary-double" [iconName]="downloadIcon"></app-button>
 
-      <app-button label="Envoie moi un message" type="outline"></app-button>
+      <app-button label="Envoie moi un message" type="outline" [iconName]="sendIcon"></app-button>
     </div>
   </div>
 
@@ -26,4 +39,6 @@
     <!-- <div class="nav-arrow prev">‹</div>
     <div class="nav-arrow next">›</div> -->
   </div>
+
+
 </section>

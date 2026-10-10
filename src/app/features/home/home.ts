@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { Button } from '../../shared/component/button/button';
-import { LucideDownload, provideLucideIcons } from '@lucide/angular';
+import { LucideDownload, LucideSend, provideLucideIcons } from '@lucide/angular';
 
 @Component({
   selector: 'app-home',
   imports: [Button],
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  providers: [provideLucideIcons(LucideDownload)],
+  providers: [provideLucideIcons(LucideDownload,LucideSend)],
 })
 export class Home {
-  downloadIcon = 'download';
+  downloadIcon = LucideDownload;
+  sendIcon= LucideSend;
 }

@@ -4,7 +4,7 @@ import { MovieCard } from './features/test/movie-card.component';
 export const routes: Routes = [
   {
     path: '',
-    component: MovieCard,
+    component: Home,
     title: 'Sidy Diarra | Ingénieur Logiciel & Designer UI/UX', 
   },
   {

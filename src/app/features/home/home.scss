@@ -1,152 +1,209 @@
 @use '../../scss/variables' as v;
 
-.hero-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.sidebar-left {
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: 4rem;
+  box-sizing: border-box;
+  animation-delay: 0.25s; // Légèrement réduit pour une meilleure réactivité
+
+  .slider-dots {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 100px 8% 60px;
-    min-height: 85vh;
-    gap: 40px;
-    overflow-x: hidden; // Évite les débordements dus aux animations
-
-    // --- Tablette & Petit Desktop ---
-    @media (max-width: 1024px) {
-        padding: 80px 5% 60px;
-        gap: 20px;
+    gap: 1.5rem;
+    position: relative;
+    &::before {
+      content: '';
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
+      margin-bottom: 8px;
     }
-
-    // --- Mobile (Basculement en colonne) ---
-    @media (max-width: v.$mobile) {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 12px;
-
-        padding-top: 100px; // Laisse la place pour ton nom en haut
-        padding-bottom: 100px; // Laisse la place pour la Tab Bar en bas
-        min-height: auto;
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      &.active {
+        background: v.$color-orange-mid;
+        box-shadow: 0 0 10px v.$color-orange-mid;
+        transform: scale(1.2);
+      }
     }
+  }
+
+  .vertical-text {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.72rem;
+    letter-spacing: 5px;
+    font-weight: 600;
+    white-space: nowrap;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 20px;
+  }
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  padding: 0px 8% 60px;
+  min-height: 85vh;
+  position: relative;
+  gap: 2rem;
+  overflow-x: hidden; // Évite les débordements dus aux animations
+
+  // --- Tablette & Petit Desktop ---
+  @media (max-width: 1024px) {
+    padding: 80px 5% 60px;
+    gap: 20px;
+  }
+
+  // --- Mobile (Basculement en colonne) ---
+  @media (max-width: v.$mobile) {
+ 
+      
+      // --- Tablette & Petit Desktop ---
+      display: grid;
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 12px;
+
+    padding-top: 100px; // Laisse la place pour ton nom en haut
+    padding-bottom: 100px; // Laisse la place pour la Tab Bar en bas
+    min-height: auto;
+    .sidebar-left {
+      display: none;
+    }
+  }
 }
 
 .hero-text {
-    .greeting {
-        font-size: clamp(1.1rem, 3vw, 1.5rem); // Taille fluide
-        color: v.$text-white;
+  .greeting {
+    font-size: clamp(1.1rem, 3vw, 1.5rem); // Taille fluide
+    color: v.$text-white;
 
-        .highlight {
-            color: v.$color-orange-mid;
-            font-weight: 700;
-        }
+    .highlight {
+      color: v.$color-orange-mid;
+      font-weight: 700;
     }
+  }
 
-    .main-title {
-        // Utilisation de clamp pour éviter que le titre soit trop gros sur petit mobile
-        font-size: clamp(2rem, 8vw, 4.5rem);
-        line-height: 1.1;
-        margin: 20px 0;
-        background: v.$main-gradient;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 900;
+  .main-title {
+    // Utilisation de clamp pour éviter que le titre soit trop gros sur petit mobile
+    font-size: clamp(3rem, 8vw, 2.5rem);
+    line-height: 1.1;
+    margin: 20px 0;
+    background: v.$main-gradient;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+
+  .summary {
+    color: v.$text-gray;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    line-height: 1.6;
+    max-width: 550px;
+    margin-bottom: 40px;
+    text-align: left;
+
+    @media (max-width: 992px) {
+      margin: 0 auto 30px;
+      padding: 0 10px;
     }
-
-    .summary {
-        color: v.$text-gray;
-        font-size: clamp(0.95rem, 2vw, 1.1rem);
-        line-height: 1.6;
-        max-width: 550px;
-        margin-bottom: 40px;
-        text-align: left;
-      
-
-        @media (max-width: 992px) {
-            margin: 0 auto 30px;
-            padding: 0 10px;
-        }
-    }
+  }
 }
 
 .cta-group {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 
-    @media (max-width: 992px) {
-        justify-content: center;
-        flex-direction: column; // Boutons l'un sur l'autre sur petit mobile
-        align-items: center;
+  @media (max-width: 992px) {
+    justify-content: center;
+    flex-direction: column; // Boutons l'un sur l'autre sur petit mobile
+    align-items: center;
 
-        ::ng-deep app-btn-primary,
-        ::ng-deep app-btn-outline {
-            width: 100%; // Les boutons prennent toute la largeur dispo
-            max-width: 300px;
-        }
+    ::ng-deep app-btn-primary,
+    ::ng-deep app-btn-outline {
+      width: 100%; // Les boutons prennent toute la largeur dispo
+      max-width: 300px;
     }
+  }
 
-    @media (min-width: 480px) and (max-width: 992px) {
-        flex-direction: row; // On garde les boutons côte à côte sur tablettes
-    }
+  @media (min-width: 480px) and (max-width: 992px) {
+    flex-direction: row; // On garde les boutons côte à côte sur tablettes
+  }
 }
 
 .hero-visual {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 
-    @media (max-width: 992px) {
-        order: -1; // Met l'image au-dessus du texte sur mobile (Optionnel)
-        margin-bottom: 40px;
+  @media (max-width: 992px) {
+    order: -1; // Met l'image au-dessus du texte sur mobile (Optionnel)
+    margin-bottom: 40px;
+  }
+
+  .main-svg {
+    width: 100%;
+    max-width: clamp(280px, 50vw, 550px);
+    height: auto;
+    z-index: 2;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(2rem, 5vw, 3rem); // Flèches plus petites sur mobile
+    color: v.$color-orange-mid;
+    cursor: pointer;
+    z-index: 10;
+    transition: v.$transition-smooth;
+
+    @media (max-width: 480px) {
+      background: rgba(0, 0, 0, 0.3); // Fond léger pour la lisibilité
+      border-radius: 50%;
+      padding: 5px;
     }
 
-    .main-svg {
-        width: 100%;
-        max-width: clamp(280px, 50vw, 550px);
-        height: auto;
-        z-index: 2;
-        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
-        animation: float 6s ease-in-out infinite;
+    &:hover {
+      transform: translateY(-50%) scale(1.1);
+      color: v.$text-white;
     }
 
-    .nav-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: clamp(2rem, 5vw, 3rem); // Flèches plus petites sur mobile
-        color: v.$color-orange-mid;
-        cursor: pointer;
-        z-index: 10;
-        transition: v.$transition-smooth;
-
-        @media (max-width: 480px) {
-            background: rgba(0, 0, 0, 0.3); // Fond léger pour la lisibilité
-            border-radius: 50%;
-            padding: 5px;
-        }
-
-        &:hover {
-            transform: translateY(-50%) scale(1.1);
-            color: v.$text-white;
-        }
-
-        &.prev {
-            left: -5px;
-        }
-
-        &.next {
-            right: -5px;
-        }
+    &.prev {
+      left: -5px;
     }
+
+    &.next {
+      right: -5px;
+    }
+  }
 }
 
 @keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
 
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-15px);
-    }
+  50% {
+    transform: translateY(-15px);
+  }
 }

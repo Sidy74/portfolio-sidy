@@ -8,17 +8,17 @@ import {
   LucideBriefcase,
   LucideMail,
   LucideDynamicIcon,
+  LucideDownload,
 } from '@lucide/angular';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  // Ajout de LucideIcon pour pouvoir lire la balise <lucide-icon> dans le HTML
-  imports: [RouterLink, RouterLinkActive, LucideDynamicIcon],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   // Injection locale des icônes utilisées dans le menu
-  providers: [provideLucideIcons(LucideHome, LucideBriefcase, LucideMail)],
+  providers: [provideLucideIcons(LucideHome, LucideBriefcase, LucideMail, LucideDownload)],
 })
 export class Navbar {
   // Déclaration du tableau de navigation sous forme de Signal
@@ -27,4 +27,16 @@ export class Navbar {
     { label: 'Projets', path: '/projets', icon: 'briefcase' },
     { label: 'Contact', path: '/contact', icon: 'mail' },
   ]);
+
+  readonly icons = { LucideHome, LucideBriefcase, LucideMail, LucideDownload };
+
+  isOpen = signal(false);
+
+  toggleMenu() {
+    this.isOpen.update((value) => !value);
+  }
+
+  closeMenu() {
+    this.isOpen.set(false);
+  }
 }

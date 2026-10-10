@@ -34,9 +34,9 @@ $main-gradient: linear-gradient(
 );
 
 $body-gradient: linear-gradient(
-  180deg,
+  0deg,
   rgba($color-light-glow, 0.22) 0%,
-  $bg-dark 65%,
+  $bg-dark 35%,
   $bg-dark 100%
 );
 

@@ -26,10 +26,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            // background: rgba(10, 8, 7, 0.8);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             box-sizing: border-box;
+            z-index: 100; // Au-dessus du contenu
 
             .external-links {
                 display: flex;
@@ -38,116 +38,82 @@
             }
 
             .social-link {
-                font-size: 13px;
+                font-size: 1rem;
                 text-decoration: none;
                 color: v.$text-gray;
             }
         }
 
-        .nav-links {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.005);
+        // Bouton Burger pour déclencher l'overlay
+        .burger-btn {
             display: flex;
-            backdrop-filter: blur(8px);
-            justify-content: space-around;
-            align-items: center;
-            padding-bottom: env(safe-area-inset-bottom);
-            box-sizing: border-box;
-            border-radius: 16px 16px 0 0;
-            list-style: none; // Pour enlever les points dont on a parlé
-            margin: 0;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+               color: v.$text-gray;
+            background: transparent;
+            border: none;
+            cursor: pointer;
             padding: 0;
-            overflow: hidden;
+            z-index: 101;
 
-            // --- Bordure dégradée sur le dessus ---
-            &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 1.5px; // Épaisseur de ta bordure
-                background: v.$main-gradient; // Utilisation de ton dégradé
-                border-radius: 16px 16px 0 0; // Suit l'arrondi du parent
+            span {
+                width: 100%;
+                height: 2px;
+                   color: v.$text-gray;
+                background: v.$text-white;
+                border-radius: 2px;
+                transition: all 0.3s ease;
             }
+        }
 
-            li {
-                list-style: none;
-            }
-
-            a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                gap: 4px;
-                color: v.$text-gray;
-                font-size: 14px;
-                text-decoration: none;
-
-                &.active {
-                    color: v.$color-orange-mid;
-                }
-
-                .mobile-icon {
-                    width: 22px;
-                    height: 22px;
-                }
-            }
-
-            .link-text {
-                display: block;
-            }
-
-            // Affiche le texte sous l'icône
-            .desktop-only {
-                display: none;
-            }
+        // Si tu veux masquer la barre du bas (nav-links) pour laisser place à l'overlay :
+        .nav-links {
+            display: none; 
         }
     }
 
     // --- VERSION DESKTOP (> 769px) ---
     @media (min-width: 769px) {
-
         position: fixed;
         top: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1.5rem 8%;
+        padding: 1.5rem 12%;
+
         background: rgba(255, 255, 255, 0);
         backdrop-filter: blur(10px);
 
-        .top-bar {
-            display: flex;
-            gap: 2rem;
-            width: auto;
-            align-items: center;
+        // Sur desktop, on cache le bouton burger
+        .burger-btn {
+            display: none;
         }
 
+        .top-bar {
+            display: contents;
+        }
 
-
-        .social-link {
-            font-size: 13px;
-            text-decoration: none;
-            color: v.$text-gray;
+        .logo {
+            font-size: 1.5rem;
+            order: 1;
         }
 
         .nav-links {
             display: flex;
+            order: 2;
             gap: 3rem;
             list-style: none;
+            margin: 0;
+            padding: 0;
 
             a {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 text-decoration: none;
-                font-size: 18px;
+                font-size: 1rem;
                 color: v.$text-gray;
                 font-weight: 500;
                 position: relative;
@@ -157,8 +123,8 @@
                     color: v.$text-white;
 
                     .indicator {
-                        opacity: 0.8; // On montre légèrement l'indicateur au survol
-                        transform: scaleX(0.8); // Un peu plus petit que l'actif
+                        opacity: 0.8;
+                        transform: scaleX(0.8);
                     }
                 }
 
@@ -171,8 +137,8 @@
 
                     .indicator {
                         opacity: 1;
-                        transform: scaleX(1); // Taille pleine
-                        background: v.$main-gradient; // Ton dégradé orange/jaune
+                        transform: scaleX(1);
+                        background: v.$main-gradient;
                     }
                 }
 
@@ -185,26 +151,12 @@
                     height: 3px;
                     background: v.$text-gray;
                     border-radius: 10px;
-                    margin-top: 4px; // Espace entre le texte et la barre
-                    opacity: 0; // Caché par défaut
-                    transform: scaleX(0); // Réduit à 0 pour l'animation
-                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); // Effet de rebond
+                    margin-top: 4px;
+                    opacity: 0;
+                    transform: scaleX(0);
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 }
             }
-        }
-
-        // On remet les liens sociaux à droite de la nav sur PC
-        .top-bar {
-            display: contents;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            order: 1;
-        }
-
-        .nav-links {
-            order: 2;
         }
 
         .external-links {
@@ -212,6 +164,109 @@
             display: flex;
             align-items: center;
             gap: 16px;
+
+            .social-link {
+                font-size: 1.25rem;
+                text-decoration: none;
+                color: v.$text-gray;
+            }
         }
     }
+}
+
+// --- STYLES DE L'OVERLAY MOBILE (V2) ---
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 90; 
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+
+    .overlay-backdrop {
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      background: rgba(10, 10, 10, 0.75);
+    }
+
+    .nav-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.overlay-backdrop {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overlay-menu {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  text-align: center;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.nav-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 15px;
+    text-decoration: none;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+
+    .index {
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      font-weight: 500;
+      color: v.$color-orange-mid;
+      opacity: 0.6;
+    }
+
+    &:hover, &.active-link {
+      color: v.$text-white;
+      transform: scale(1.05);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    
+    &.active-link .label {
+      background: v.$main-gradient;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
 }
