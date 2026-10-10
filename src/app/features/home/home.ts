@@ -30,6 +30,6 @@ export class Home {
 
   openWhatsapp() {
     // Redirige vers WhatsApp avec ton numéro (ex: +223XXXXXXXX pour le Mali)
-    window.open('https://wa.me/22382017226', '_blank');
+    window.open('https://wa.me/22382017226', 'Bonjour Mr Sidy!');
   }
 }
