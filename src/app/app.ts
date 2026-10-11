@@ -1,7 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './features/navbar/navbar';
 import { Meta, Title } from '@angular/platform-browser';
+import { filter } from 'rxjs';
+
+declare const gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -15,6 +18,20 @@ export class App {
   private titleService = inject(Title);
   private metaService = inject(Meta);
 
+  private router = inject(Router);
+
+  constructor() {
+    // Envoie l'événement de changement de page à Google Analytics
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      if (typeof gtag === 'function') {
+        gtag('config', 'G-T8CDFRGD83', {
+          page_path: event.urlAfterRedirects
+        });
+      }
+    });
+  }
   ngOnInit(): void {
     // 1. Le titre principal de ton portfolio (Visible dans l'onglet et sur Google)
     this.titleService.setTitle(
