@@ -19,6 +19,7 @@ COPY . /app
 RUN npx ng version >/dev/null 2>&1 || npm install -D @angular/cli
 
 # Commande de build de l'application Angular pour la production
+# (Déclenche le script "prebuild" s'il est défini dans package.json pour le sitemap)
 RUN npm run build --if-present || npx ng build --configuration production --output-path=./dist/portfolio-sidy
 
 # ===============================================
@@ -27,12 +28,10 @@ RUN npm run build --if-present || npx ng build --configuration production --outp
 # ===============================================
 FROM nginx:alpine AS runtime
 
-# Optionnel: Si vous avez un fichier nginx.conf personnalisé, décommentez la ligne ci-dessous
-# et assurez-vous que le fichier nginx.conf est à la racine de votre projet Git.
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copie de la configuration Nginx personnalisée pour gérer la canonicalisation (www -> non-www) et le routage Angular
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copie les fichiers générés par le stage de build dans le répertoire de service de Nginx
-# Assurez-vous que le chemin /app/dist/portfolio-sidy correspond au chemin réel !
 COPY --from=build /app/dist/portfolio-sidy/browser/ /usr/share/nginx/html
 
 # Indique à Coolify quel port le conteneur utilise
