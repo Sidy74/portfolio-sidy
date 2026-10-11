@@ -3,10 +3,11 @@ import { Button } from '../../shared/component/button/button';
 import { LucideDownload, LucideSend, provideLucideIcons } from '@lucide/angular';
 import { TerminalTriggerComponent } from '../terminal/terminal-trigger';
 import { TerminalComponent } from '../terminal/terminal';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [Button, TerminalTriggerComponent, TerminalComponent],
+  imports: [Button, TerminalTriggerComponent, TerminalComponent,NgOptimizedImage],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   providers: [provideLucideIcons(LucideDownload, LucideSend)],
