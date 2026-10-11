@@ -1,0 +1,10 @@
+# Autoriser tous les robots d'indexation (Google, Bing, etc.) à explorer le site
+User-agent: *
+Allow: /
+
+# Empêcher l'exploration des pages d'administration ou dossiers sensibles (si tu en as)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Indiquer l'emplacement de ton sitemap
+Sitemap: https://sidydiarra.com/sitemap.xml

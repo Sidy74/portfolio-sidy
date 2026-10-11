@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import {
   LucideCode2,
   LucideDatabase,
@@ -25,6 +26,26 @@ export interface Service {
   styleUrl: './my-services.scss',
 })
 export class MyServices {
+
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
+
+  ngOnInit(): void {
+    // 1. Titre de la page (Doit contenir tes mots-clés principaux)
+    this.titleService.setTitle('Services & Expertises | Sidy Diarra - Développeur Full-Stack & UI/UX');
+
+    // 2. Meta description pour Google
+    this.metaService.updateTag({ 
+      name: 'description', 
+      content: 'Découvrez mes services en développement Full-Stack (Angular, Django), UI/UX Design, administration de bases de données, gestion de projet et maintenance informatique.' 
+    });
+
+    // 3. Balises Open Graph (pour les partages sur LinkedIn, WhatsApp, Twitter)
+    this.metaService.updateTag({ property: 'og:title', content: 'Services & Expertises | Sidy Diarra' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Solutions sur-mesure en ingénierie logicielle, UI/UX design et support informatique.' });
+    this.metaService.updateTag({ property: 'og:type', content: 'website' });
+  }
+
   services: Service[] = [
     {
       id: 'fullstack',
