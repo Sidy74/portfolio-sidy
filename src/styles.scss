@@ -19,7 +19,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Lora', serif;
   color: v.$text-white;
   min-height: 100vh;
   position: relative;
@@ -54,4 +54,13 @@ body {
       padding: 20px 16px; 
     }
   }
+}
+
+/* Titres percutants avec Syne */
+h1, h2, h3, h4, h5, h6, 
+.hero-title, 
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em; /* Rendu plus serré et moderne */
 }

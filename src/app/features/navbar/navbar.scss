@@ -1,177 +1,178 @@
 @use '../../scss/variables' as v;
 
 .navbar {
-    width: 100vw;
-    z-index: 1000;
-    box-sizing: border-box;
+  width: 100vw;
+  z-index: 1000;
+  box-sizing: border-box;
 
-    // --- LOGIQUE COMMUNE ---
-    .logo .gradient-text {
-        background: v.$main-gradient;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 800;
-    }
+  // --- LOGIQUE COMMUNE ---
+  .logo .gradient-text {
+    font-family: 'Syne', sans-serif;
+    background: v.$main-gradient;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
 
-    // --- VERSION MOBILE (< 768px) ---
-    @media (max-width: 768px) {
-        .top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            padding: 0 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            box-sizing: border-box;
-            z-index: 100; // Au-dessus du contenu
+  // --- VERSION MOBILE (< 768px) ---
+  @media (max-width: 768px) {
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 65px;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-sizing: border-box;
+      z-index: 100; // Au-dessus du contenu
 
-            .external-links {
-                display: flex;
-                align-items: center;
-                gap: 16px;
-            }
-
-            .social-link {
-                font-size: 1rem;
-                text-decoration: none;
-                color: v.$text-gray;
-            }
-        }
-
-        // Bouton Burger pour déclencher l'overlay
-        .burger-btn {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-               color: v.$text-gray;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 101;
-
-            span {
-                width: 100%;
-                height: 2px;
-                   color: v.$text-gray;
-                background: v.$text-white;
-                border-radius: 2px;
-                transition: all 0.3s ease;
-            }
-        }
-
-        // Si tu veux masquer la barre du bas (nav-links) pour laisser place à l'overlay :
-        .nav-links {
-            display: none; 
-        }
-    }
-
-    // --- VERSION DESKTOP (> 769px) ---
-    @media (min-width: 769px) {
-        position: fixed;
-        top: 0;
+      .external-links {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding: 1.5rem 12%;
+        gap: 16px;
+      }
 
-        background: rgba(255, 255, 255, 0);
-        backdrop-filter: blur(10px);
-
-        // Sur desktop, on cache le bouton burger
-        .burger-btn {
-            display: none;
-        }
-
-        .top-bar {
-            display: contents;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            order: 1;
-        }
-
-        .nav-links {
-            display: flex;
-            order: 2;
-            gap: 3rem;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-
-            a {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-decoration: none;
-                font-size: 1rem;
-                color: v.$text-gray;
-                font-weight: 500;
-                position: relative;
-                transition: color 0.3s ease;
-
-                &:hover {
-                    color: v.$text-white;
-
-                    .indicator {
-                        opacity: 0.8;
-                        transform: scaleX(0.8);
-                    }
-                }
-
-                &.active {
-                    background: v.$main-gradient;
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    font-weight: 600;
-
-                    .indicator {
-                        opacity: 1;
-                        transform: scaleX(1);
-                        background: v.$main-gradient;
-                    }
-                }
-
-                .mobile-icon {
-                    display: none;
-                }
-
-                .indicator {
-                    width: 20px;
-                    height: 3px;
-                    background: v.$text-gray;
-                    border-radius: 10px;
-                    margin-top: 4px;
-                    opacity: 0;
-                    transform: scaleX(0);
-                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                }
-            }
-        }
-
-        .external-links {
-            order: 3;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-
-            .social-link {
-                font-size: 1.25rem;
-                text-decoration: none;
-                color: v.$text-gray;
-            }
-        }
+      .social-link {
+        font-size: 1rem;
+        text-decoration: none;
+        color: v.$text-gray;
+      }
     }
+
+    // Bouton Burger pour déclencher l'overlay
+    .burger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      color: v.$text-gray;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+
+      span {
+        width: 100%;
+        height: 2px;
+        color: v.$text-gray;
+        background: v.$text-white;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+    }
+
+    // Si tu veux masquer la barre du bas (nav-links) pour laisser place à l'overlay :
+    .nav-links {
+      display: none;
+    }
+  }
+
+  // --- VERSION DESKTOP (> 769px) ---
+  @media (min-width: 769px) {
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 12%;
+
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(10px);
+
+    // Sur desktop, on cache le bouton burger
+    .burger-btn {
+      display: none;
+    }
+
+    .top-bar {
+      display: contents;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      order: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      order: 2;
+      gap: 3rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        font-size: 1rem;
+        color: v.$text-gray;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: v.$text-white;
+
+          .indicator {
+            opacity: 0.8;
+            transform: scaleX(0.8);
+          }
+        }
+
+        &.active {
+          background: v.$main-gradient;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: 600;
+
+          .indicator {
+            opacity: 1;
+            transform: scaleX(1);
+            background: v.$main-gradient;
+          }
+        }
+
+        .mobile-icon {
+          display: none;
+        }
+
+        .indicator {
+          width: 20px;
+          height: 3px;
+          background: v.$text-gray;
+          border-radius: 10px;
+          margin-top: 4px;
+          opacity: 0;
+          transform: scaleX(0);
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+      }
+    }
+
+    .external-links {
+      order: 3;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .social-link {
+        font-size: 1.25rem;
+        text-decoration: none;
+        color: v.$text-gray;
+      }
+    }
+  }
 }
 
 // --- STYLES DE L'OVERLAY MOBILE (V2) ---
@@ -182,10 +183,12 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  z-index: 90; 
+  z-index: 90;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease;
   visibility: hidden;
   display: flex;
   align-items: center;
@@ -211,7 +214,10 @@
 
 .overlay-backdrop {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -235,8 +241,9 @@
 .nav-item {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
   a {
     display: inline-flex;
@@ -256,12 +263,13 @@
       opacity: 0.6;
     }
 
-    &:hover, &.active-link {
+    &:hover,
+    &.active-link {
       color: v.$text-white;
       transform: scale(1.05);
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
     }
-    
+
     &.active-link .label {
       background: v.$main-gradient;
       -webkit-background-clip: text;
