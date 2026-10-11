@@ -7,6 +7,12 @@ export const routes: Routes = [
     component: Home,
     title: 'Sidy Diarra | Ingénieur Logiciel & Designer UI/UX', 
   },
+    {
+    path: 'services',
+    loadComponent: () =>
+      import('./features/my-services/my-services').then((m) => m.MyServices),
+    title: 'Mes Services | Sidy Diarra',
+  },
   {
     path: 'projets',
     loadComponent: () =>

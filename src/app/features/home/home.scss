@@ -170,7 +170,7 @@
 
       app-button {
         flex: 1; // S'assure qu'ils partagent équitablement la largeur (50% / 50%)
-        
+
         ::ng-deep button {
           width: 100% !important;
           justify-content: center;
@@ -185,7 +185,7 @@
 
     // Sur desktop, on désactive le conteneur pour aligner les 3 boutons à la suite
     .row-secondary-buttons {
-      display: contents; 
+      display: contents;
     }
   }
 }

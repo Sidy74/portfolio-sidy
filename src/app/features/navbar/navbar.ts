@@ -24,6 +24,7 @@ export class Navbar {
   // Déclaration du tableau de navigation sous forme de Signal
   menuItems = signal([
     { label: 'Accueil', path: '/', icon: 'home' },
+    { label: 'Services', path: '/services', icon: 'settings' },
     { label: 'Projets', path: '/projets', icon: 'briefcase' },
     { label: 'Contact', path: '/contact', icon: 'mail' },
   ]);

@@ -1,0 +1,36 @@
+<section class="services-container">
+
+    <div class="section-header">
+        <p class="subtitle">CE QUE JE PROPOSE</p>
+        <h2 class="section-title">Mes Services & Expertises</h2>
+        <p class="section-description">
+            Des solutions globales combinant ingénierie logicielle, gestion de projet, administration système et
+            fourniture de matériel.
+        </p>
+    </div>
+
+    <div class="services-grid">
+        @for (service of services; track service.id; let i = $index) {
+        <div class="service-card">
+            <div class="icon-number-block">
+                <div class="card-icon">
+                    <svg [lucideIcon]="service.icon" size="28"></svg>
+                </div>
+                <span class="card-index">0{{ i + 1 }}</span>
+            </div>
+
+            <div class="card-content">
+                <h3 class="card-title">{{ service.title }}</h3>
+                <p class="card-description">{{ service.description }}</p>
+
+                <div class="skills-tags">
+                    @for (skill of service.skills; track skill) {
+                    <span class="tag">{{ skill }}</span>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+</section>

@@ -9,11 +9,11 @@ import { TerminalComponent } from '../terminal/terminal';
   imports: [Button, TerminalTriggerComponent, TerminalComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  providers: [provideLucideIcons(LucideDownload,LucideSend)],
+  providers: [provideLucideIcons(LucideDownload, LucideSend)],
 })
 export class Home {
   downloadIcon = LucideDownload;
-  sendIcon= LucideSend;
+  sendIcon = LucideSend;
 
   downloadCv() {
     // Crée un lien temporaire pour lancer le téléchargement du CV
@@ -25,7 +25,8 @@ export class Home {
 
   sendEmail() {
     // Ouvre le client mail par défaut avec ton adresse
-    window.location.href = 'mailto:sidydiarra1290@gmail.com?subject=Contact%20depuis%20le%20Portfolio';
+    window.location.href =
+      'mailto:sidydiarra1290@gmail.com?subject=Contact%20depuis%20le%20Portfolio';
   }
 
   openWhatsapp() {

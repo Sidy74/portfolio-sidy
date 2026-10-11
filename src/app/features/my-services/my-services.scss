@@ -1,0 +1,266 @@
+@use '../../scss/variables' as v;
+
+.services-container {
+  padding: 64px 100px;
+  text-align: center;
+  color: v.$text-white;
+
+  @media (max-width: v.$tablet) {
+    padding: 32px 40px;
+  }
+
+  @media (max-width: v.$mobile) {
+    padding: 32px 0px;
+  }
+}
+
+.section-header {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 50px auto;
+
+  .subtitle {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: v.$color-orange-mid;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: v.$text-white;
+    margin-bottom: 15px;
+  }
+
+  .section-description {
+    color: v.$text-gray;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    @media (max-width: v.$mobile) {
+      padding: 0 15px;
+      font-size: 0.92rem;
+    }
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+
+  @media (max-width: v.$tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // --- MOBILE : Colonne unique mais cartes horizontales ---
+  @media (max-width: v.$mobile) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 16px;
+    margin-top: 30px;
+  }
+}
+
+.service-card {
+  border-radius: 24px;
+  padding: 40px;
+  text-align: left;
+  transition: v.$transition;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // Fond Glassmorphism
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  // Bordure en dégradé (Technique du Masque)
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    padding: 2px;
+    border-radius: 24px;
+    background: v.$main-gradient;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  // --- Bloc regroupant Icône + Numéro ---
+  .icon-number-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  // --- Indicateur / Numéro (Sous l'icône) ---
+  .card-index {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 1px;
+    margin-top: 12px;
+    transition: v.$transition;
+  }
+
+  // Effet au survol
+  &:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateY(-5px);
+
+    .card-index {
+      color: v.$color-orange-mid;
+    }
+
+    .card-icon {
+      background: v.$color-orange-mid;
+      color: v.$text-white;
+    }
+  }
+
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(v.$color-orange-mid, 0.15);
+    color: v.$color-orange-mid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: v.$transition;
+    flex-shrink: 0;
+
+    svg,
+    lucide-icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: v.$text-white;
+    margin-bottom: 12px;
+  }
+
+  .card-description {
+    color: v.$text-gray;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 500;
+    }
+  }
+
+  // --- ADAPTATION MOBILE (Format Horizontal & Numéro sous l'icône) ---
+  @media (max-width: v.$mobile) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 18px;
+
+    &::before {
+      border-radius: 18px;
+    }
+
+    .icon-number-block {
+      margin-bottom: 0;
+      align-items: center; // Centre l'icône et le numéro alignés verticalement à gauche
+      flex-shrink: 0;
+      width: 50px;
+    }
+
+    .card-index {
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+
+      svg,
+      lucide-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .card-description {
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .skills-tags {
+      gap: 6px;
+
+      .tag {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+      }
+    }
+  }
+
+  // --- ADAPTATION TABLETTE ---
+  @media (max-width: v.$tablet) and (min-width: calc(#{v.$mobile} + 1px)) {
+    padding: 28px;
+
+    .card-title {
+      font-size: 1.25rem;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+  }
+}
