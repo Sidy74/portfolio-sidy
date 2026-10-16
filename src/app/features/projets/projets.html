@@ -1,106 +1,142 @@
-<div class="portfolio-border-wrapper">
-  <div class="portfolio-container" [style.backgroundImage]="'url(' + selectedProject().image + ')'">
-    <main class="featured-project">
-      <header class="portfolio-header">
-        <div class="logo-brand">Sidy Diarra</div>
+<div class="portfolio-container">
 
-        <nav class="filter-nav">
-          <a href="#" class="active">Tous</a>
-          <a href="#">Web</a>
-          <a href="#">Mobile</a>
-          <a href="#">UI/UX</a>
-        </nav>
-      </header>
+  <!-- =========================================================
+       PROJET PRINCIPAL
+       ========================================================= -->
+  <main class="featured-project">
 
-      <div class="project-details" [attr.data-project-id]="selectedProject().id">
-        <span class="project-index">
-          {{ selectedProject().id }}
-        </span>
+    <!-- Filtres : visibles uniquement sur desktop -->
+    <nav class="filter-nav">
+      <button class="filter-btn active">Tous</button>
+      <button class="filter-btn">Web</button>
+      <button class="filter-btn">Mobile</button>
+      <button class="filter-btn">UI/UX</button>
+    </nav>
 
-        <span class="project-tag">
-          {{ selectedProject().category }}
-        </span>
+    <div class="project-details">
 
-        <h1>
-          {{ selectedProject().title }}
-        </h1>
+      <span class="project-tag">
+        {{ selectedProject().category }}
+      </span>
 
-        <p class="project-desc">
-          {{ selectedProject().description }}
-        </p>
+      <h1>
+        {{ selectedProject().title }}
+      </h1>
 
-        <div class="tech-badges">
-          @for (tech of selectedProject().technologies; track $index) {
-            <span class="badge">
-              {{ tech }}
-            </span>
-          }
-        </div>
+      <p class="project-desc">
+        {{ selectedProject().description }}
+      </p>
 
-        <div class="project-actions">
-          @if (selectedProject().githubUrl) {
-            <app-button
-              label="Code source"
-              type="outline"
-              [iconName]="lucideFolderGit2"
-              (btnClick)="openExternalLink(selectedProject().githubUrl)"
-            />
-          }
-          @if (selectedProject().liveUrl) {
-            <app-button
-              label="Voir le site"
-              type="primary-double"
-              [iconName]="externalLink"
-              (btnClick)="openExternalLink(selectedProject().liveUrl)"
-            />
-          }
-        </div>
-      </div>
-    </main>
-
-    <div class="projects-list-wrapper">
-      <aside class="projects-list" #projectsList>
-        @for (project of projects; track project.id; let i = $index) {
-          <div
-            class="project-card"
-            [class.active]="i === selectedProjectIndex()"
-            [style.backgroundImage]="'url(' + project.image + ')'"
-            (click)="selectProject(project)"
-          >
-            <div class="card-inner">
-              <div class="card-meta">
-                <span class="card-num">
-                  {{ project.id }}
-                </span>
-
-                <div class="card-titles">
-                  <h3>{{ project.title }}</h3>
-                  <p>{{ project.category }}</p>
-                </div>
-              </div>
-
-              <app-button
-                class="card-btn"
-                label="Voir"
-                [type]="selectedProject().id === project.id ? 'primary-double' : 'outline'"
-                [iconName]="externalLink"
-                (btnClick)="handleButtonClick($event, project.liveUrl)"
-              />
-            </div>
-          </div>
-        }
-      </aside>
-
-      <div class="projects-dots-nav">
-        @for (project of projects; track project.id; let i = $index) {
-          <button
-            class="dot"
-            [class.active]="i === selectedProjectIndex()"
-            (click)="selectProject(project)"
-            [attr.aria-label]="'Aller au projet ' + project.title"
-          ></button>
+      <div class="tech-badges">
+        @for (tech of selectedProject().technologies; track $index) {
+          <span class="badge">
+            {{ tech }}
+          </span>
         }
       </div>
+
+      <div class="project-actions">
+
+        @if (selectedProject().githubUrl) {
+          <app-button
+            label="Code source"
+            type="outline"
+            [iconName]="lucideFolderGit2"
+            (btnClick)="openExternalLink(selectedProject().githubUrl)"
+          />
+        }
+
+        @if (selectedProject().liveUrl) {
+          <app-button
+            label="Voir le site"
+            type="primary-double"
+            [iconName]="externalLink"
+            (btnClick)="openExternalLink(selectedProject().liveUrl)"
+          />
+        }
+
+      </div>
+
     </div>
-  </div>
+
+  </main>
+
+
+  <!-- =========================================================
+       PROJETS
+       Desktop : sidebar droite
+       Mobile  : bottom tabs
+       ========================================================= -->
+  <aside class="projects-sidebar">
+
+    <div class="projects-list" #projectsList>
+
+      @for (
+        project of displayedProjects;
+        track project.id;
+        let i = $index
+      ) {
+
+        <button
+          type="button"
+          class="project-card"
+          [class.active]="i === selectedProjectIndex()"
+          [style.backgroundImage]="'url(' + project.image + ')'"
+          (click)="selectProject(project)"
+          [attr.aria-label]="'Voir le projet ' + project.title"
+        >
+
+          <div class="card-content">
+
+            <span class="card-category">
+              {{ project.category }}
+            </span>
+
+            <span class="card-title">
+              {{ project.title }}
+            </span>
+
+          </div>
+
+        </button>
+
+      }
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       DOTS DESKTOP
+       Cachés sur mobile
+       ========================================================= -->
+  <aside class="sidebar-right">
+
+    <div class="slider-dots">
+
+      @for (
+        project of displayedProjects;
+        track project.id;
+        let i = $index
+      ) {
+
+        <button
+          type="button"
+          class="dot"
+          [class.active]="i === selectedProjectIndex()"
+          (click)="selectProject(project)"
+          [attr.aria-label]="'Aller au projet ' + project.title"
+        ></button>
+
+      }
+
+    </div>
+
+    <div class="vertical-text">
+      PROJETS
+    </div>
+
+  </aside>
+
 </div>

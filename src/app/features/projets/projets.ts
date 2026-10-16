@@ -25,8 +25,22 @@ interface Project {
 export class Projets {
   externalLink = LucideExternalLink;
   lucideFolderGit2 = LucideFolderGit2;
+
+  private autoPlayInterval: ReturnType<typeof setInterval> | undefined;
+  private autoPlayEnabled = true;
+
   // Liste des projets réalisés
   projects: Project[] = [
+    {
+      id: '03',
+      title: 'MeLoger Africa - Plateforme Immobilière',
+      category: 'Application Web & Mobile',
+      description:
+        "Plateforme immobilière permettant de consulter et gérer des annonces de logements. Développement de l'interface web et intégration d'une application mobile avec publication sur Google Play et Apple Store.",
+      image: '/project_meloger.svg',
+      technologies: ['Angular', 'React Native', 'Django', 'PostgreSQL', 'Google Play Console'],
+      liveUrl: 'https://meloger-africa.com',
+    },
     {
       id: '01',
       title: 'Transit - Plateforme Logistique',
@@ -68,28 +82,20 @@ export class Projets {
       technologies: ['Django', 'Angular', 'PostgreSQL', 'Docker'],
       githubUrl: 'https://...',
     },
-    {
-      id: '03',
-      title: 'Meloger - Solution Immobilière',
-      category: 'Application Mobile',
-      description:
-        "Déploiement et mise à jour d'une application mobile sur le Play Store, répondant aux dernières exigences des API Android.",
-      image: 'assets/images/meloger.jpg',
-      technologies: ['React Native', 'Redux', 'Node.js', 'Google Play Console'],
-      githubUrl: 'https://...',
-    },
   ];
 
   selectedProject = signal<any>(this.projects[0]);
-  private autoPlayInterval: any;
 
   // Calcul automatique de l'index basé sur le signal
   selectedProjectIndex = computed(() => {
-    return this.projects.findIndex(p => p.id === this.selectedProject().id);
+    return this.projects.findIndex((p) => p.id === this.selectedProject().id);
   });
 
   @ViewChild('projectsList') projectsList!: ElementRef<HTMLDivElement>;
 
+  get displayedProjects() {
+    return this.projects.slice(0, 5);
+  }
   constructor() {
     // Déclenche le scroll horizontal dès que le projet sélectionné change (clic ou auto-play)
     effect(() => {
@@ -107,31 +113,41 @@ export class Projets {
   ngOnDestroy() {
     this.stopAutoPlay();
   }
-
   // 1. GESTION DU TIMER AUTOMATIQUE
-  startAutoPlay() {
-    this.stopAutoPlay(); // Sécurité : évite de dupliquer des timers
+  startAutoPlay(): void {
+    this.stopAutoPlay();
+
     this.autoPlayInterval = setInterval(() => {
+      if (!this.autoPlayEnabled) {
+        return;
+      }
+
       this.nextProject();
-    }, 4000); // Alterne toutes les 4 secondes
+    }, 4000);
   }
 
-  stopAutoPlay() {
+  stopAutoPlay(): void {
     if (this.autoPlayInterval) {
       clearInterval(this.autoPlayInterval);
+      this.autoPlayInterval = undefined;
     }
   }
 
-  nextProject() {
+  nextProject(): void {
+    if (!this.autoPlayEnabled) {
+      return;
+    }
     const currentIndex = this.selectedProjectIndex();
-    const nextIndex = (currentIndex + 1) % this.projects.length; // Boucle à l'infini
-    this.selectedProject.set(this.projects[nextIndex]);
+    const nextIndex = (currentIndex + 1) % this.displayedProjects.length;
+    this.selectedProject.set(this.displayedProjects[nextIndex]);
   }
 
   // 2. SELECTION MANUELLE (Réinitialise le timer pour le confort utilisateur)
-  selectProject(project: any) {
+  selectProject(project: Project): void {
+    // on désactive définitivement l'autoplay
+    this.autoPlayEnabled = false;
+    this.stopAutoPlay();
     this.selectedProject.set(project);
-    this.startAutoPlay(); // Relance le compteur à zéro pour ne pas skipper juste après un clic
   }
 
   // 3. FONCTION DE SCROLL ULTRA-PRÉCISE
@@ -140,19 +156,23 @@ export class Projets {
 
     const container = this.projectsList.nativeElement;
     const cards = container.querySelectorAll('.project-card');
-    
+
     if (cards && cards[index]) {
       const activeCard = cards[index] as HTMLElement;
-      
+
       const containerRect = container.getBoundingClientRect();
       const cardRect = activeCard.getBoundingClientRect();
 
       // Calcule la position horizontale parfaite
-      const scrollLeftPosition = container.scrollLeft + (cardRect.left - containerRect.left) - (containerRect.width / 2) + (cardRect.width / 2);
+      const scrollLeftPosition =
+        container.scrollLeft +
+        (cardRect.left - containerRect.left) -
+        containerRect.width / 2 +
+        cardRect.width / 2;
 
       container.scrollTo({
         left: scrollLeftPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
