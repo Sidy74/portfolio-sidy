@@ -37,20 +37,19 @@ export class Projets {
       category: 'Application Web & Mobile',
       description:
         "Plateforme immobilière permettant de consulter et gérer des annonces de logements. Développement de l'interface web et intégration d'une application mobile avec publication sur Google Play et Apple Store.",
-      image: '/project_meloger.svg',
+      image: 'project_meloger.svg',
       technologies: ['Angular', 'React Native', 'Django', 'PostgreSQL', 'Google Play Console'],
       liveUrl: 'https://meloger-africa.com',
     },
     {
       id: '01',
-      title: 'Transit - Plateforme Logistique',
+      title: 'Refuem-Ma - Plateforme Web',
       category: 'Application Web & Responsive',
-      description:
-        "Conception d'une interface de suivi logistique multi-étapes avec un design fluide et une optimisation mobile avancée.",
-      image: 'photo-sidy2.jpg',
-      technologies: ['Angular 21', 'SCSS', 'Leaflet', 'Lucide Icons'],
-      liveUrl: 'https://...',
-      githubUrl: 'https://...',
+      description: `Conception et développement d'une plateforme web moderne et responsive pour Réseau des Femmes Universitaires et Enseignantes du Mali - Ensemble pour l'excellence académique et l'égalité des genres, avec une interface intuitive et adaptée aux différents appareils.`,
+      image: 'refuema.png',
+      technologies: ['Angular 21', 'Tailwind'],
+      liveUrl: 'https://refuema-mali.org/',
+      // githubUrl: 'https://github.com/...',
     },
     {
       id: '02',
