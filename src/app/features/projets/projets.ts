@@ -53,13 +53,14 @@ export class Projets {
     },
     {
       id: '02',
-      title: 'Smizo - Escrow Marketing',
-      category: 'Architecture Web & API',
+      title: 'AFIMA - Association des Femmes Ingénieurs du Mali',
+      category: 'Site Web & Responsive',
       description:
-        "Plateforme de mise en relation d'influenceurs dotée d'un système de tiers de confiance (escrow) par tokens pour sécuriser les transactions.",
-      image: 'photo-sidy.jpg',
-      technologies: ['Django', 'Angular', 'PostgreSQL', 'Docker'],
-      githubUrl: 'https://...',
+        "Conception et développement d'une plateforme web moderne et responsive dédiée à l'Association des Femmes Ingénieurs du Mali, avec présentation de l'association, actualités, projets, adhésion, galerie et informations de contact.",
+      image: 'Afima.png',
+      technologies: ['Angular 21', 'SCSS', 'Responsive Design', 'Lucide Icons'],
+      liveUrl: 'https://afimamaali.org/',
+      githubUrl: 'https://github.com/...',
     },
     {
       id: '05',
