@@ -25,6 +25,7 @@ export class Navbar {
   menuItems = signal([
     { label: 'Accueil', path: '/', icon: 'home' },
     { label: 'Services', path: '/services', icon: 'settings' },
+    {label: 'Parcours', path: '/parcours', icon: 'book' },
     { label: 'Projets', path: '/projets', icon: 'briefcase' },
     { label: 'Contact', path: '/contact', icon: 'mail' },
   ]);

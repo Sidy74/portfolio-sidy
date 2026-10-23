@@ -1,0 +1,252 @@
+<section class="parcours-section" id="parcours">
+
+  <!-- Glows décoratifs -->
+  <div class="parcours-glow parcours-glow-top"></div>
+  <div class="parcours-glow parcours-glow-bottom"></div>
+
+  <div class="parcours-container">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="section-header">
+
+      <span class="section-badge">
+        <i class="pi pi-route"></i>
+        Mon parcours
+      </span>
+
+      <h1>
+        Mon <span>Parcours</span>
+      </h1>
+
+      <p>
+        Découvrez mon parcours académique et professionnel,
+        ainsi que les différentes étapes qui ont contribué
+        à mon évolution dans le domaine de l’ingénierie logicielle.
+      </p>
+
+      <div class="header-line"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         DEUX COLONNES
+    ====================================================== -->
+
+    <div class="parcours-grid">
+
+
+      <!-- ===================================================
+           FORMATION
+      ==================================================== -->
+
+      <div class="parcours-column">
+
+        <!-- Header -->
+        <div class="column-header">
+
+          <div class="column-icon">
+            <i class="pi pi-graduation-cap"></i>
+          </div>
+
+          <div class="column-title">
+            <span>Parcours académique</span>
+            <h2>Formation</h2>
+          </div>
+
+        </div>
+
+
+        <!-- Timeline Formation -->
+        <div class="parcours-timeline">
+
+          @for (item of formations; track item.title) {
+
+            <article class="timeline-item">
+
+              <!-- Point timeline -->
+              <div class="timeline-point">
+                <span></span>
+              </div>
+
+
+              <!-- Carte -->
+              <div class="parcours-card">
+
+                <!-- Haut de carte -->
+                <div class="card-top">
+
+                  <span class="card-level">
+                    {{ item.level }}
+                  </span>
+
+                  <span class="card-date">
+                    {{ item.date }}
+                  </span>
+
+                </div>
+
+
+                <!-- Contenu -->
+                <div class="card-main">
+
+                  <div class="card-icon">
+                    <i [class]="item.icon"></i>
+                  </div>
+
+                  <div class="card-content">
+
+                    <h3>
+                      {{ item.title }}
+                    </h3>
+
+                    <div class="card-institution">
+
+                      <i class="pi pi-building"></i>
+
+                      <span>
+                        {{ item.institution }}
+                      </span>
+
+                    </div>
+
+                    <p>
+                      {{ item.description }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <!-- Tags -->
+                <div class="card-tags">
+
+                  @for (tag of item.tags; track tag) {
+                    <span>{{ tag }}</span>
+                  }
+
+                </div>
+
+              </div>
+
+            </article>
+
+          }
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ===================================================
+           EXPÉRIENCE
+      ==================================================== -->
+
+      <div class="parcours-column">
+
+        <!-- Header -->
+        <div class="column-header">
+
+          <div class="column-icon">
+            <i class="pi pi-briefcase"></i>
+          </div>
+
+          <div class="column-title">
+            <span>Parcours professionnel</span>
+            <h2>Expérience</h2>
+          </div>
+
+        </div>
+
+
+        <!-- Timeline Expérience -->
+        <div class="parcours-timeline">
+
+          @for (item of experiences; track item.title) {
+
+            <article class="timeline-item">
+
+              <!-- Point timeline -->
+              <div class="timeline-point">
+                <span></span>
+              </div>
+
+
+              <!-- Carte -->
+              <div class="parcours-card">
+
+                <!-- Haut de carte -->
+                <div class="card-top">
+
+                  <span class="card-level">
+                    {{ item.level }}
+                  </span>
+
+                  <span class="card-date">
+                    {{ item.date }}
+                  </span>
+
+                </div>
+
+
+                <!-- Contenu -->
+                <div class="card-main">
+
+                  <div class="card-icon">
+                    <i [class]="item.icon"></i>
+                  </div>
+
+                  <div class="card-content">
+
+                    <h3>
+                      {{ item.title }}
+                    </h3>
+
+                    <div class="card-institution">
+
+                      <i class="pi pi-building"></i>
+
+                      <span>
+                        {{ item.institution }}
+                      </span>
+
+                    </div>
+
+                    <p>
+                      {{ item.description }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <!-- Tags -->
+                <div class="card-tags">
+
+                  @for (tag of item.tags; track tag) {
+                    <span>{{ tag }}</span>
+                  }
+
+                </div>
+
+              </div>
+
+            </article>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
