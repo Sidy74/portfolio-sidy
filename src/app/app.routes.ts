@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
-import { MovieCard } from './features/test/movie-card.component';
 export const routes: Routes = [
   {
     path: '',

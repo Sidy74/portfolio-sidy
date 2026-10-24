@@ -1,35 +1,55 @@
 @use '../../scss/variables' as v;
 
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
 .sidebar-left {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+
   z-index: 5;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
+
+  height: 70%;
   gap: 4rem;
+
   box-sizing: border-box;
-  animation-delay: 0.25s; // Légèrement réduit pour une meilleure réactivité
+  animation-delay: 0.25s;
 
   .slider-dots {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+
     position: relative;
+
     &::before {
       content: '';
       width: 1px;
       height: 60px;
+
       background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
+
       margin-bottom: 8px;
     }
+
     .dot {
       width: 12px;
       height: 12px;
+
       background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
+
       transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
       &.active {
         background: v.$color-orange-mid;
         box-shadow: 0 0 10px v.$color-orange-mid;
@@ -40,128 +60,242 @@
 
   .vertical-text {
     color: rgba(255, 255, 255, 0.3);
+
     font-size: 0.72rem;
     letter-spacing: 5px;
     font-weight: 600;
+
     white-space: nowrap;
     writing-mode: vertical-lr;
     transform: rotate(180deg);
+
     text-align: center;
+
     margin-bottom: 5px;
     margin-top: 20px;
   }
 }
 
+/* =========================================================
+   HERO CONTAINER
+   ========================================================= */
+
 .hero-container {
-  display: flex;
-  align-items: center;
-  padding: 0px 8% 60px;
-  min-height: 85vh;
   position: relative;
-  gap: 2rem;
-  overflow-x: hidden; // Évite les débordements dus aux animations
 
-  // --- Tablette & Petit Desktop ---
-  @media (max-width: 1024px) {
-    padding: 80px 5% 60px;
-    gap: 20px;
-  }
+  display: grid;
 
-  // --- Mobile (Basculement en colonne) ---
-  @media (max-width: v.$mobile) {
-    // --- Tablette & Petit Desktop ---
-    display: grid;
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 12px;
+  /* 57.5% texte / 42.5% visuel */
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(0, 0.85fr);
 
-    padding-bottom: 100px; // Laisse la place pour la Tab Bar en bas
-    min-height: auto;
-    .sidebar-left {
-      display: none;
-    }
-  }
+  align-items: center;
+  min-height: 85vh;
+  padding: 0 6% 60px 8%;
+  gap: 3rem;
+
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
+
 .hero-text {
-  @media (max-width: v.$mobile) {
-    // --- Mobile montre sur l'image
-    margin-top: -180px;
-    z-index: 50;
-    position: relative;
-    padding: 2rem 1rem;
-    border-radius: 12px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.5) 10%,
-      transparent 100%
-    );
-  }
+  width: 100%;
+  max-width: 650px;
+
+  justify-self: center;
+
+  position: relative;
+  z-index: 3;
 
   .greeting {
-    font-size: clamp(1.1rem, 3vw, 1.5rem); // Taille fluide
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
     color: v.$text-white;
 
     .highlight {
       color: v.$color-orange-mid;
       font-weight: 700;
     }
-    @media (max-width: v.$mobile) {
-      font-weight: bolder;
-      text-align: start;
-      font-size: clamp(1rem, 4vw, 1.2rem); // Taille plus petite sur mobile
-    }
   }
 
   .main-title {
-    // Utilisation de clamp pour éviter que le titre soit trop gros sur petit mobile
-    font-size: clamp(3rem, 8vw, 2.5rem);
+    /*
+     * Ancien :
+     * clamp(3rem, 8vw, 2.5rem)
+     *
+     * Incorrect car min > max.
+     */
+    font-size: clamp(2.5rem, 3vw, 3rem);
+
     line-height: 1.1;
+
     margin: 20px 0;
+
     background: v.$main-gradient;
+
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+
     font-weight: 900;
-    // --- Mobile (Basculement en colonne) ---
-    @media (max-width: v.$mobile) {
-      font-size: clamp(1.8rem, 4vw, 2rem); // Taille plus petite sur mobile
-      text-align: start;
-    }
   }
 
   .summary {
     color: v.$text-gray;
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    line-height: 1.6;
-    max-width: 550px;
-    margin-bottom: 40px;
-    text-align: left;
 
-    @media (max-width: 992px) {
-      margin: 0 auto 30px;
-      padding: 0 10px;
-    }
-    @media (max-width: v.$mobile) {
-      text-align: start;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      max-width: 100%;
-    }
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+
+    line-height: 1.6;
+
+    max-width: 550px;
+
+    margin-bottom: 40px;
+
+    text-align: left;
   }
 }
 
+/* =========================================================
+   CTA
+   ========================================================= */
+
 .cta-group {
   display: flex;
-  gap: 15px;
-  align-items: center;
 
-  @media (max-width: 992px) {
-    flex-direction: column; // Empile le CV en haut et le conteneur en bas
+  gap: 15px;
+
+  align-items: center;
+}
+
+/* =========================================================
+   HERO VISUAL
+   ========================================================= */
+
+.hero-visual {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 500px;
+
+  display: flex;
+
+  align-items: end;
+  justify-content: end;
+
+  justify-self: end;
+
+  margin: 0;
+}
+
+.hero-visual::before {
+  content: '';
+  position: absolute;
+
+  width: 80%;
+  height: 80%;
+
+  background: radial-gradient(
+    circle,
+    rgba(247, 155, 57, 0.16) 0%,
+    rgba(235, 82, 53, 0.08) 35%,
+    transparent 75%
+  );
+
+  filter: blur(35px);
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-visual .main-svg {
+  display: block;
+
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+
+  z-index: 2;
+  position: relative;
+  z-index: 2;
+
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+}
+
+/* =========================================================
+   NAVIGATION ARROWS
+   ========================================================= */
+
+.nav-arrow {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  font-size: clamp(2rem, 5vw, 3rem);
+
+  color: v.$color-orange-mid;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  transition: v.$transition-smooth;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+    color: v.$text-white;
+  }
+
+  &.prev {
+    left: -5px;
+  }
+
+  &.next {
+    right: -5px;
+  }
+}
+
+/* =========================================================
+   TABLETTE / PETIT DESKTOP
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .hero-container {
+    padding: 0 4% 60px 6%;
+    gap: 1.5rem;
+
+    /*
+     * On conserve la proportion,
+     * mais avec un espace plus compact.
+     */
+    grid-template-columns:
+      minmax(0, 1.15fr)
+      minmax(0, 0.85fr);
+  }
+
+  .sidebar-left {
+    left: 1rem;
+  }
+
+  .hero-text {
+    max-width: 550px;
+  }
+
+  .hero-visual .main-svg {
+    max-width: 500px;
+  }
+
+  .cta-group {
+    flex-direction: column;
     align-items: stretch;
     width: 100%;
 
-    // Ligne 2 : Force les deux boutons (Email et WhatsApp) sur une seule et même ligne
     .row-secondary-buttons {
       display: flex;
       flex-direction: row;
@@ -169,7 +303,7 @@
       width: 100%;
 
       app-button {
-        flex: 1; // S'assure qu'ils partagent équitablement la largeur (50% / 50%)
+        flex: 1;
 
         ::ng-deep button {
           width: 100% !important;
@@ -178,69 +312,139 @@
       }
     }
   }
+}
 
-  @media (min-width: 993px) {
-    flex-direction: row;
-    flex-wrap: nowrap;
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-    // Sur desktop, on désactive le conteneur pour aligner les 3 boutons à la suite
+@media (max-width: v.$mobile) {
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+
+    min-height: auto;
+
+    padding: 80px 20px 100px;
+
+    gap: 0;
+
+    text-align: center;
+  }
+
+  .sidebar-left {
+    display: none;
+  }
+
+  /* Image au-dessus du texte */
+  .hero-visual {
+    order: -1;
+
+    width: 100%;
+    min-height: auto;
+
+    margin-bottom: 20px;
+  }
+
+  .hero-visual .main-svg {
+    width: 100%;
+    max-width: 430px;
+  }
+
+  .hero-text {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: -180px;
+
+    padding: 2rem 1rem;
+
+    border-radius: 12px;
+
+    z-index: 50;
+
+    text-align: left;
+
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.5) 10%,
+      transparent 100%
+    );
+
+    .greeting {
+      font-weight: bolder;
+      text-align: start;
+
+      font-size: clamp(1rem, 4vw, 1.2rem);
+    }
+
+    .main-title {
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
+
+      text-align: start;
+    }
+
+    .summary {
+      text-align: start;
+
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+
+      max-width: 100%;
+
+      margin: 0 auto 30px;
+    }
+  }
+
+  .cta-group {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    width: 100%;
+
     .row-secondary-buttons {
-      display: contents;
+      display: flex;
+
+      flex-direction: row;
+
+      gap: 12px;
+
+      width: 100%;
+
+      app-button {
+        flex: 1;
+
+        ::ng-deep button {
+          width: 100% !important;
+          justify-content: center;
+        }
+      }
     }
   }
 }
 
-.hero-visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+/* =========================================================
+   TRÈS PETIT MOBILE
+   ========================================================= */
 
-  @media (max-width: 992px) {
-    order: -1; // Met l'image au-dessus du texte sur mobile (Optionnel)
-    margin-bottom: 40px;
-  }
-
-  .main-svg {
-    width: 100%;
-    max-width: clamp(280px, 50vw, 550px);
-    height: auto;
-    z-index: 2;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
-    animation: float 6s ease-in-out infinite;
+@media (max-width: 480px) {
+  .hero-visual .main-svg {
+    max-width: 360px;
   }
 
   .nav-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: clamp(2rem, 5vw, 3rem); // Flèches plus petites sur mobile
-    color: v.$color-orange-mid;
-    cursor: pointer;
-    z-index: 10;
-    transition: v.$transition-smooth;
+    background: rgba(0, 0, 0, 0.3);
 
-    @media (max-width: 480px) {
-      background: rgba(0, 0, 0, 0.3); // Fond léger pour la lisibilité
-      border-radius: 50%;
-      padding: 5px;
-    }
+    border-radius: 50%;
 
-    &:hover {
-      transform: translateY(-50%) scale(1.1);
-      color: v.$text-white;
-    }
-
-    &.prev {
-      left: -5px;
-    }
-
-    &.next {
-      right: -5px;
-    }
+    padding: 5px;
   }
 }
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
 
 @keyframes float {
   0%,
